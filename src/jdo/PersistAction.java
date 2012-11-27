@@ -1,6 +1,6 @@
 package jdo;
 
-public class PersistAction<T extends DataObject> extends JDOAction
+public class PersistAction<T> extends JDOAction
 {
   private T o;
 

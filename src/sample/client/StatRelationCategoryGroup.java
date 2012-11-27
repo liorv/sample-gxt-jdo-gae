@@ -3,18 +3,20 @@ package sample.client;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+
 @PersistenceCapable
-abstract public class StatRelationCategoryGroup extends StatRelation
+public class StatRelationCategoryGroup extends StatRelation
 {
-  protected StatRelationCategoryGroup(Category c, Grouping g, boolean isPercent) {
-    super(c.getId(), g.getId(), isPercent);
-    category = c;
-    group = g;
+  protected StatRelationCategoryGroup(Category c, Grouping g, boolean isPercent)
+  {
+    super(isPercent);
+    category = c.name;
+    group = g.name;
   }
-  
+
   @Persistent
-  protected Category category;
-  
+  public String category;
+
   @Persistent
-  protected Grouping group;
+  public String group;
 }

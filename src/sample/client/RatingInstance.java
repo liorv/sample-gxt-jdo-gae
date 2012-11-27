@@ -17,17 +17,17 @@ public class RatingInstance
   }
   
   @Persistent(valueStrategy = IdGeneratorStrategy.UUIDSTRING)
-  String id;
+  public String id;
 
   @Persistent
-  Date timestamp;
+  public Date timestamp;
 
   @Persistent
-  String rated;
+  public String rated;
 
   @Persistent
-  String category;
+  public String category;
 
   @Persistent
-  float score;
+  public float score;
 }

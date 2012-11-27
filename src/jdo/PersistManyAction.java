@@ -2,7 +2,7 @@ package jdo;
 
 import java.util.Collection;
 
-public class PersistManyAction<T extends DataObject> extends JDOAction
+public class PersistManyAction<T> extends JDOAction
 {
   private Collection<T> coll;
 
