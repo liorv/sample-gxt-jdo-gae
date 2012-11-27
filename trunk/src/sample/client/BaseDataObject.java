@@ -5,19 +5,21 @@ import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import com.google.appengine.api.datastore.Key;
+
 import jdo.DataObject;
 
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 abstract public class BaseDataObject extends DataObject
 {
-  protected BaseDataObject(String id) {
-    super(id);
+  protected BaseDataObject(Key group, String kind, String id) {
+    super(group, kind, id);
   }
 
   @Persistent
-  protected String description;
+  public String description;
 
   @Persistent
-  protected String icon;
+  public String icon;
 }

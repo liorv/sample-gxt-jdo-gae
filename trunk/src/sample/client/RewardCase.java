@@ -1,26 +1,23 @@
-
 package sample.client;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 
-import jdo.DataObject;
+import com.google.appengine.api.datastore.Key;
+
 
 @PersistenceCapable
-public class RewardCase extends DataObject
+public class RewardCase
 {
-  public int getCount() {
-    return count;
-  }
-
-  public void setCount(int count) {
-    this.count = count;
-  }
-
-  protected RewardCase(String id) {
-    super(id);
-  }
+  @PrimaryKey
+  @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY) 
+  public Key key;
   
   @Persistent
-  protected int count;
+  public Reward reward;
+
+  @Persistent
+  public int count;
 }

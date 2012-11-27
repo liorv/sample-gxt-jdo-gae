@@ -49,7 +49,9 @@ public final class JDOSession
     JDOSession retval = new JDOSession();
     retval.pm = retval.getPM();
     retval.i_transactional = transactional;
-    retval.pm.currentTransaction().begin();
+    if (transactional) {
+      retval.pm.currentTransaction().begin();
+    }
 
     return retval;
   }
@@ -65,7 +67,7 @@ public final class JDOSession
   public void close() {
     try {
       tx = pm.currentTransaction();
-      if (tx.isActive()) tx.commit();
+      if (i_transactional && tx.isActive()) tx.commit();
     }
     catch (javax.jdo.JDODataStoreException dse) {
       System.err.println("Exception Caught JDODataStoreException: ["
@@ -124,8 +126,8 @@ public final class JDOSession
     }
   }
 
-  public <T> T find(Class<T> clz, String id) {
-    return pm.getObjectById(clz, id);
+  public <T> T find(Class<T> clz, Object key) {
+    return pm.getObjectById(clz, key);
   }
 
   private static <T> String fieldValue(Class<T> clz, String k, String v) {
@@ -141,11 +143,11 @@ public final class JDOSession
   }
 
   public <T extends DataObject> Collection<T> findByIds(Class<T> clz,
-      Set<String> oids)
+      Set<Object> oids)
   {
     Vector<T> retval = new Vector<T>();
-    for (String id : oids) {
-      T obj = find(clz, id);
+    for (Object key : oids) {
+      T obj = find(clz, key);
       if (obj != null) {
         retval.add(obj);
       }
@@ -154,7 +156,7 @@ public final class JDOSession
     return retval;
   }
 
-  public <T extends DataObject> void persist(T o) throws JDOException {
+  public <T> void persist(T o) throws JDOException {
     try {
       pm.makePersistent(o);
     }
@@ -164,18 +166,14 @@ public final class JDOSession
     }
   }
 
-  public <T extends DataObject> void persist(Collection<T> coll)
-      throws JDOException
-  {
+  public <T> void persist(Collection<T> coll) throws JDOException {
     if (SAFE_MODE)
       persist_safe(coll);
     else
       persist_fast(coll);
   }
 
-  private <T extends DataObject> void persist_safe(Collection<T> coll)
-      throws JDOException
-  {
+  private <T> void persist_safe(Collection<T> coll) throws JDOException {
     StringBuffer sb = new StringBuffer();
 
     T temp = null;
@@ -185,16 +183,14 @@ public final class JDOSession
         pm.makePersistent(temp);
       }
       catch (Exception e) {
-        sb.append("couldn't persist [" + temp.getId() + "]: \n\treason: "
+        sb.append("couldn't persist [" + temp.toString() + "]: \n\treason: "
             + e.getMessage() + "\n");
       }
     }
     if (sb.length() > 0) log.warn(sb.toString());
   }
 
-  private <T extends DataObject> void persist_fast(Collection<T> coll)
-      throws JDOException
-  {
+  private <T> void persist_fast(Collection<T> coll) throws JDOException {
     String reason = null;
     try {
       pm.makePersistentAll(coll);

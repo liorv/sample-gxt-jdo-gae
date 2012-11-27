@@ -1,20 +1,73 @@
 package sample.client;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.jdo.Query;
 import javax.jdo.annotations.PersistenceAware;
 
-import jdo.DataObject;
 import jdo.GAEUtils;
 import jdo.JDOException;
 import jdo.JDOSession;
+import jdo.JDOUtils;
 
 @PersistenceAware
 public class TestUtils
 {
   public static void Test1() {
+    init();
 
+    addToGroup("Girls", "Nadine");
+    attachCategory("Girls", "Looks");
+    rate("Nadine", "Looks", 10);
+    rate("Nadine", "Looks", 9);
+    
+    addToGroup("Girls", "Anna");
+    attachCategory("Girls", "Looks");
+    rate("Anna", "Looks", 85);
+    
+    JDOSession session = JDOSession.open(true);
+    Grouping g = session.find(Grouping.class, "Girls");
+    session.getPM().deletePersistent(g);
+    session.close();
+  }
+
+  private static void rate(String rated, String category, int score) {
+    JDOSession session = JDOSession.open(true);
+    Category c = session.find(Category.class, category);
+    Rated r = session.find(Rated.class, rated);
+    c.rate(r, score);
+    session.close();
+  }
+
+  private static void addToGroup(String group, String rated) {
+    JDOSession session = JDOSession.open();
+    Rated r = session.find(Rated.class, rated);
+    Grouping g = session.find(Grouping.class, group);
+    g.addMember(r);
+    session.close();
+  }
+
+  private static void attachCategory(String group, String category) {
+    JDOSession session = JDOSession.open();
+    Category c = session.find(Category.class, category);
+    Grouping g = session.find(Grouping.class, group);
+    c.addGroup(g);
+    session.close();
+  }
+
+  public static <T> T find(Class<T> clz, String id) {
+    JDOSession session = JDOSession.open();
+    Query q = session.getPM().newQuery(Rated.class);
+    q.setFilter("id == idParam");
+    q.declareParameters("String idParam");
+
+    @SuppressWarnings("unchecked")
+    List<T> retval = (List<T>) q.execute(id);
+
+    session.close();
+    return retval.get(0);
   }
 
   public static String[] peopleNames = {
@@ -65,30 +118,26 @@ public class TestUtils
   }
 
   public static void init() {
-
     try {
       printState("START");
-      
-      JDOSession session = JDOSession.open(true);
-      session.clear(Rated.class);
-      session.clear(Grouping.class);
-      session.clear(Category.class);
-      session.clear(Reward.class);
-      session.close();
-      
+
+      JDOUtils.clear(Rated.class);      
+      JDOUtils.clear(Grouping.class);
+      JDOUtils.clear(Category.class);
+      JDOUtils.clear(Reward.class);
+
       printState("Clear - DONE");
 
-      session = JDOSession.open(true);
       Set<Rated> people = createPeople();
       Set<Grouping> groups = createGroups();
       Set<Category> categories = createCategories();
       Set<Reward> rewards = createRewards();
-      session.getPM().makePersistentAll(people);
-      session.getPM().makePersistentAll(groups);
-      session.getPM().makePersistentAll(categories);
-      session.getPM().makePersistentAll(rewards);
 
-      session.close();
+      JDOUtils.persist(people);
+      JDOUtils.persist(groups);
+      JDOUtils.persist(categories);
+      JDOUtils.persist(rewards);
+
       printState("Load - DONE");
     }
     catch (JDOException e) {
@@ -97,11 +146,11 @@ public class TestUtils
   }
 
   private static void printState(String label) throws JDOException {
-    System.out.println("------------------------- "+label);
-    System.out.println(GAEUtils.find(Rated.class, DataObject.AppKey));
-    System.out.println(GAEUtils.find(Grouping.class, DataObject.AppKey));
-    System.out.println(GAEUtils.find(Category.class, DataObject.AppKey));
-    System.out.println(GAEUtils.find(Reward.class, DataObject.AppKey));
+    System.out.println("------------------------- " + label);
+    System.out.println(GAEUtils.findAll(Rated.class, null));
+    System.out.println(GAEUtils.findAll(Grouping.class, null));
+    System.out.println(GAEUtils.findAll(Category.class, null));
+    System.out.println(GAEUtils.findAll(Reward.class, null));
   }
 
 }

@@ -1,55 +1,45 @@
 package sample.client;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
+
+import com.google.appengine.datanucleus.annotations.Unowned;
 
 @PersistenceCapable
 public class Category extends BaseDataObject
 {
-  protected Category(String category, boolean isPercent) {
-    super(category);
+  protected Category(String id, boolean isPercent) {
+    super(null, Category.class.getSimpleName(), id);
     this.isPercent = isPercent;
+    groups = new HashSet<Grouping>();
   }
-  
-  public void rate(Rated r, float score) {
-    updateRatedStat(r, score);
-    
+
+  public void rate(Rated rated, float score) {
     for (Iterator<Grouping> it = groups.iterator(); it.hasNext();) {
-      Grouping g = (Grouping) it.next();
-      if(g.members().contains(r)) {
-        updateGroupStat(g, score);
-      }
-    }
-  }
-  
-  private void updateGroupStat(Grouping g, float score) {
-    for (StatRelationCategoryGroup stat : groupStats) {
-      if(stat.group.equals(g)) {
-        stat.updateStats(score);
+      Grouping g = it.next();
+      if (g.members.contains(rated)) {
+        g.updateStats(this, score);
+        rated.updateStats(this, score);
       }
     }
   }
 
-  private void updateRatedStat(Rated r, float score) {
-    for (StatRelationCategoryRated stat : ratedStats) {
-      if(stat.rated.equals(r)) {
-        stat.updateStats(score);
-      }
+  public void addGroup(Grouping g) {
+    groups.add(g);
+    g.getStat(this);
+    for (Rated r : g.members) {
+      r.getStat(this);
     }
   }
 
   @Persistent
-  protected boolean isPercent;
- 
+  public boolean isPercent;
+
   @Persistent
-  protected Set<Grouping> groups;
-  
-  @Persistent
-  protected Set<StatRelationCategoryRated> ratedStats;
-  
-  @Persistent
-  protected Set<StatRelationCategoryGroup> groupStats;
- 
+  @Unowned
+  public Set<Grouping> groups;
 }

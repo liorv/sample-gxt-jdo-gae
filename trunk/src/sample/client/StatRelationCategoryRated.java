@@ -4,17 +4,17 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 @PersistenceCapable
-abstract public class StatRelationCategoryRated extends StatRelation
+public class StatRelationCategoryRated extends StatRelation
 {
   protected StatRelationCategoryRated(Category c, Rated r, boolean isPercent) {
-    super(c.getId(), r.getId(), isPercent);
-    category = c;
-    rated = r;
+    super(isPercent);
+    category = c.name;
+    rated = r.name;
   }
-  
+
   @Persistent
-  protected Category category;
-  
+  public String category;
+
   @Persistent
-  protected Rated rated;
+  public String rated;
 }

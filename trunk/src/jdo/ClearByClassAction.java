@@ -15,7 +15,7 @@ public class ClearByClassAction<T> extends JDOAction
 
   @Override
   public boolean isTransactional() {
-    return true;
+    return false;
   }
 
 }
