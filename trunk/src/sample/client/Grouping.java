@@ -14,7 +14,7 @@ import com.google.appengine.datanucleus.annotations.Unowned;
 public class Grouping extends BaseDataObject
 {
   protected Grouping(String id) {
-    super(null, Grouping.class.getSimpleName(), id);
+    super(Grouping.class.getSimpleName(), id);
     members = new HashSet<Rated>();
   }
 
