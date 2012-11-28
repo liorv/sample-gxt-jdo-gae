@@ -13,7 +13,7 @@ import com.google.appengine.datanucleus.annotations.Unowned;
 public class Category extends BaseDataObject
 {
   protected Category(String id, boolean isPercent) {
-    super(null, Category.class.getSimpleName(), id);
+    super(Category.class.getSimpleName(), id);
     this.isPercent = isPercent;
     groups = new HashSet<Grouping>();
   }

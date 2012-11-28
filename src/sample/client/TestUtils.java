@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.jdo.Query;
 import javax.jdo.annotations.PersistenceAware;
 
-import jdo.GAEUtils;
 import jdo.JDOException;
 import jdo.JDOSession;
 import jdo.JDOUtils;
@@ -147,10 +146,6 @@ public class TestUtils
 
   private static void printState(String label) throws JDOException {
     System.out.println("------------------------- " + label);
-    System.out.println(GAEUtils.findAll(Rated.class, null));
-    System.out.println(GAEUtils.findAll(Grouping.class, null));
-    System.out.println(GAEUtils.findAll(Category.class, null));
-    System.out.println(GAEUtils.findAll(Reward.class, null));
   }
 
 }

@@ -7,6 +7,6 @@ import javax.jdo.annotations.PersistenceCapable;
 public class Reward extends BaseDataObject
 {
   protected Reward(String id) {
-    super(null, Reward.class.getSimpleName(), id);
+    super(Reward.class.getSimpleName(), id);
   }
 }

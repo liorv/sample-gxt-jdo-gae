@@ -12,7 +12,7 @@ import javax.jdo.annotations.Persistent;
 public class Rated extends BaseDataObject
 {
   protected Rated(String id) {
-    super(null, Rated.class.getSimpleName(), id); 
+    super(Rated.class.getSimpleName(), id); 
     rewardCases = new HashSet<RewardCase>();
     stats = new HashSet<StatRelationCategoryRated>();
   }

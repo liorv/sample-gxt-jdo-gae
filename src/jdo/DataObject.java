@@ -7,8 +7,8 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
+import jdo.key.KeyFactoryProvider;
+
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
@@ -16,14 +16,14 @@ abstract public class DataObject
 { 
   @PrimaryKey
   @Persistent
-  public Key key;
+  public Object key;
 
   @Persistent
   public String name;
 
-  protected DataObject(Key group, String kind, String id) {
+  protected DataObject(String kind, String id) {
     this.name = id;
-    key = KeyFactory.createKey(group, kind, id);
+    key = KeyFactoryProvider.getKeyfactory().createKey(kind, id);
   }
 
   @Override
