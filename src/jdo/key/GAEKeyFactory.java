@@ -8,13 +8,8 @@ import com.google.appengine.api.datastore.KeyFactory;
 public class GAEKeyFactory implements IKeyFactory
 {
   @Override
-  public Object createKey(String kind, String id) {
-    return KeyFactory.createKey(kind, id);
-  }
-
-  @Override
-  public Object createKey(String kind, long id) {
-    return KeyFactory.createKey(kind, id);
+  public <T> String createKey(Class<T> clz, String id) {
+    return KeyFactory.createKeyString(clz.getSimpleName(), id);
   }
 
 }

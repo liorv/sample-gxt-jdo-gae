@@ -3,8 +3,8 @@ package sample.server;
 import org.springframework.stereotype.Service;
 
 import sample.client.GreetingService;
-import sample.client.TestUtils;
 import sample.shared.FieldVerifier;
+import sample.test.TestUtils;
 
 /**
  * The server side implementation of the RPC service.

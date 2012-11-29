@@ -16,12 +16,24 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 import javax.jdo.annotations.PersistenceAware;
 
+import jdo.key.KFProvider;
+
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 @PersistenceAware
+@Component
 public final class JDOSession
 {
-  private static final boolean SAFE_MODE = false;
+  private static boolean safePersistMode;
+
+  @Autowired
+  @Qualifier("safePersistMode")
+  public void setSafePersistMode(Boolean safePersistMode) {
+    JDOSession.safePersistMode = safePersistMode.booleanValue();
+  }
 
   private static Logger log = Logger.getLogger(JDOSession.class);
 
@@ -126,8 +138,8 @@ public final class JDOSession
     }
   }
 
-  public <T> T find(Class<T> clz, Object key) {
-    return pm.getObjectById(clz, key);
+  public <T> T find(Class<T> clz, String name) {
+    return pm.getObjectById(clz, KFProvider.key(clz, name));
   }
 
   private static <T> String fieldValue(Class<T> clz, String k, String v) {
@@ -143,11 +155,11 @@ public final class JDOSession
   }
 
   public <T extends DataObject> Collection<T> findByIds(Class<T> clz,
-      Set<Object> oids)
+      Set<String> names)
   {
     Vector<T> retval = new Vector<T>();
-    for (Object key : oids) {
-      T obj = find(clz, key);
+    for (String name : names) {
+      T obj = find(clz, name);
       if (obj != null) {
         retval.add(obj);
       }
@@ -167,7 +179,7 @@ public final class JDOSession
   }
 
   public <T> void persist(Collection<T> coll) throws JDOException {
-    if (SAFE_MODE)
+    if (safePersistMode)
       persist_safe(coll);
     else
       persist_fast(coll);
@@ -244,7 +256,7 @@ public final class JDOSession
   public <T extends DataObject> void clear(Class<T> clz, Collection<String> oids)
       throws JDOException
   {
-    if (SAFE_MODE)
+    if (safePersistMode)
       clear_byIdList_deleteOneByOne(clz, oids);
     else
       clear_byIdList_deletePersistentAll(clz, oids);

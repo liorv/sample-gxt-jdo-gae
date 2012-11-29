@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.jdo.annotations.Element;
+import javax.jdo.annotations.ForeignKeyAction;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
@@ -14,12 +15,13 @@ import com.google.appengine.datanucleus.annotations.Unowned;
 public class Grouping extends BaseDataObject
 {
   protected Grouping(String id) {
-    super(Grouping.class.getSimpleName(), id);
+    super(Grouping.class, id);
     members = new HashSet<Rated>();
   }
 
   @Persistent
   @Unowned
+  @Element(deleteAction=ForeignKeyAction.NONE, dependent="false")
   public Set<Rated> members;
 
   @Persistent
