@@ -11,8 +11,8 @@ import jdo.DataObject;
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 abstract public class BaseDataObject extends DataObject
 {
-  protected BaseDataObject(String kind, String id) {
-    super(kind, id);
+  protected <T> BaseDataObject(Class<T> clz, String id) {
+    super(clz, id);
   }
 
   @Persistent

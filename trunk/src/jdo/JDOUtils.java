@@ -7,8 +7,7 @@ public class JDOUtils
   public static <T> T findAndDetach(Class<T> clz, Object k) {
     JDOSession session = JDOSession.open();   
     
-    @SuppressWarnings("unchecked")
-    T retval = (T) session.getPM().getObjectById(k);
+    T retval = (T) session.getPM().getObjectById(clz, k);
     
     retval = session.getPM().detachCopy(retval);
     session.close();

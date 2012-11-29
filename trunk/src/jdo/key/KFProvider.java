@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-public class KeyFactoryProvider
+public class KFProvider
 {
 
   private static IKeyFactory keyFactory;
@@ -13,10 +13,14 @@ public class KeyFactoryProvider
   public static IKeyFactory getKeyfactory() {
     return keyFactory;
   }
+  
+  public static <T> String key(Class<T> clz, String id) {
+    return getKeyfactory().createKey(clz, id);
+  }
 
   @Autowired
   @Qualifier("keyfactory")
   public void setKeyFactory(IKeyFactory keyFactory) {
-    KeyFactoryProvider.keyFactory = keyFactory;
+    KFProvider.keyFactory = keyFactory;
   }
 }

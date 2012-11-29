@@ -7,6 +7,11 @@ import java.util.Set;
 import javax.jdo.Query;
 import javax.jdo.annotations.PersistenceAware;
 
+import sample.client.Category;
+import sample.client.Grouping;
+import sample.client.Rated;
+import sample.client.Reward;
+
 import jdo.JDOException;
 import jdo.JDOSession;
 import jdo.JDOUtils;
@@ -14,7 +19,7 @@ import jdo.JDOUtils;
 @PersistenceAware
 public class TestUtils
 {
-  public static void Test1() {
+  public static void Test2() {
     init();
 
     addToGroup("Girls", "Nadine");
@@ -146,6 +151,15 @@ public class TestUtils
 
   private static void printState(String label) throws JDOException {
     System.out.println("------------------------- " + label);
+    JDOSession session = JDOSession.open();
+    /*
+    Extent<TEAM> teamx = session.getPM().getExtent(TEAM.class);
+    for (TEAM team : teamx) {
+      System.out.println("+ TEAM: ["+team.name+"], id=["+session.getPM().getObjectId(team)+"]");
+    }
+    */
+    session.close();
+    System.out.println();
   }
 
 }

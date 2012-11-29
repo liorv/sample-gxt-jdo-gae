@@ -6,24 +6,24 @@ import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-
-import jdo.key.KeyFactoryProvider;
+import jdo.key.KFProvider;
 
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
+
 abstract public class DataObject
 { 
   @PrimaryKey
   @Persistent
-  public Object key;
+  public String pk;
 
   @Persistent
   public String name;
 
-  protected DataObject(String kind, String id) {
+  protected <T> DataObject(Class<T> clz, String id) {
     this.name = id;
-    key = KeyFactoryProvider.getKeyfactory().createKey(kind, id);
+    pk = KFProvider.key(clz, id);
   }
 
   @Override
@@ -32,7 +32,7 @@ abstract public class DataObject
       DataObject o = (DataObject) obj;
       String itsClass = o.getClass().getSimpleName();
       String myClass = getClass().getSimpleName();
-      return (itsClass.equals(myClass) && o.name.equals(name));
+      return (itsClass.equals(myClass) && o.pk.equals(pk));
     }
     return false;
   };

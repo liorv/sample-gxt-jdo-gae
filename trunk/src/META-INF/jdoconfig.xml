@@ -29,8 +29,9 @@
 		<property name="javax.jdo.option.ConnectionDriverName" value="org.apache.derby.jdbc.EmbeddedDriver" />
 		<property name="javax.jdo.option.ConnectionURL" value="jdbc:derby:derby-database;create=true" />
 		<property name="javax.jdo.option.ConnectionUserName" value="datum" />
-		<property name="javax.jdo.option.ConnectionPassword" value="datum" />
+		<property name="javax.jdo.option.ConnectionPassword" value="datum" />		
 		<property name="datanucleus.autoCreateSchema" value="true" />
+		<!--  <property name="datanucleus.rdbms.useLegacyNativeValueStrategy" value="false" /> -->
 		
 	</persistence-manager-factory>
 
