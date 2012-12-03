@@ -25,14 +25,6 @@ public class Rated extends BaseDataObject
     }
   }
 
-  @Persistent
-  @Element(dependent="true")
-  public Set<RewardCase> rewardCases;
-
-  @Persistent
-  @Element(dependent="true")
-  public Set<StatRelationCategoryRated> stats;
-
   public void updateStats(Category category, float score) {
     for (StatRelationCategoryRated stat : stats) {
       if (stat.category.equals(category.name)) {
@@ -51,4 +43,12 @@ public class Rated extends BaseDataObject
     stats.add(newStat);
     return newStat;
   }
+
+  @Persistent
+  @Element(dependent="true")
+  public Set<RewardCase> rewardCases;
+
+  @Persistent
+  @Element(dependent="true")
+  public Set<StatRelationCategoryRated> stats;
 }
