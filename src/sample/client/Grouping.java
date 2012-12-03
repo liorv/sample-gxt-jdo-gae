@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.jdo.annotations.Element;
-import javax.jdo.annotations.ForeignKeyAction;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
@@ -21,7 +20,7 @@ public class Grouping extends BaseDataObject
 
   @Persistent
   @Unowned
-  @Element(deleteAction=ForeignKeyAction.NONE, dependent="false")
+  @Element(dependent="false")
   public Set<Rated> members;
 
   @Persistent

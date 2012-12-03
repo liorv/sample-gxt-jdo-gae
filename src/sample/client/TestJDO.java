@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.jdo.Extent;
 import javax.jdo.Query;
 import javax.jdo.annotations.PersistenceAware;
 
@@ -12,6 +13,7 @@ import sample.client.Grouping;
 import sample.client.Rated;
 import sample.client.Reward;
 
+import jdo.DataObject;
 import jdo.JDOException;
 import jdo.JDOSession;
 import jdo.JDOUtils;
@@ -152,14 +154,19 @@ public class TestJDO
   private static void printState(String label) throws JDOException {
     System.out.println("------------------------- " + label);
     JDOSession session = JDOSession.open();
-    /*
-    Extent<TEAM> teamx = session.getPM().getExtent(TEAM.class);
-    for (TEAM team : teamx) {
-      System.out.println("+ TEAM: ["+team.name+"], id=["+session.getPM().getObjectId(team)+"]");
-    }
-    */
+    printExtent(session, Rated.class);
+    printExtent(session, Grouping.class);
+    printExtent(session, Category.class);
+    printExtent(session, Reward.class);
     session.close();
     System.out.println();
+  }
+
+  private static <T extends DataObject> void printExtent(JDOSession session, Class<T> clz) {
+    Extent<T> ex = session.getPM().getExtent(clz);
+    for (T o : ex) {
+      System.out.println("+ "+clz.getSimpleName()+": ["+o.name+"], id=["+session.getPM().getObjectId(o)+"]");
+    }    
   }
 
 }
