@@ -16,6 +16,7 @@ abstract public class StatRelation
 {
   protected StatRelation(boolean isPercent) {
     this.isPercent = isPercent;
+    reset();
   }
   
   @PrimaryKey
