@@ -17,9 +17,9 @@ import jdo.JDOSession;
 import jdo.JDOUtils;
 
 @PersistenceAware
-public class TestUtils
+public class TestJDO
 {
-  public static void Test2() {
+  public static void run() {
     init();
 
     addToGroup("Girls", "Nadine");

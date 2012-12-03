@@ -3,8 +3,9 @@ package sample.server;
 import org.springframework.stereotype.Service;
 
 import sample.client.GreetingService;
+import sample.client.TestJDO;
 import sample.shared.FieldVerifier;
-import sample.test.TestUtils;
+import sample.test.MiniTest;
 
 /**
  * The server side implementation of the RPC service.
@@ -14,7 +15,11 @@ public class GreetingServiceImpl implements GreetingService
 {
 
   public String greetServer(String input) throws IllegalArgumentException {
-    TestUtils.Test1();
+    boolean testMini = false;
+    if (testMini)
+      MiniTest.run();
+    else
+      TestJDO.run();
 
     // Verify that the input is valid.
     if (!FieldVerifier.isValidName(input)) {

@@ -3,14 +3,15 @@ package sample.test;
 import javax.jdo.Extent;
 import javax.jdo.annotations.PersistenceAware;
 
+
 import jdo.JDOException;
 import jdo.JDOSession;
 import jdo.JDOUtils;
 
 @PersistenceAware
-public class TestUtils
+public class MiniTest
 {
-  public static void Test1() {
+  public static void run() {
     try {
       printState("START");
       JDOUtils.clear(TEAM.class);

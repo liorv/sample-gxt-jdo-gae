@@ -9,12 +9,13 @@ import javax.jdo.annotations.Persistent;
 
 import sample.client.BaseDataObject;
 
+
 import com.google.appengine.datanucleus.annotations.Unowned;
 
 @PersistenceCapable
 public class TEAM extends BaseDataObject
 {
-  protected TEAM(String id) {
+  public TEAM(String id) {
     super(TEAM.class, id);
   }
 
