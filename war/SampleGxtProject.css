@@ -1,36 +1,96 @@
 /** Add css rules here for your application. */
-
-
 /** Example rules used by the template application (remove for your app) */
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: white;
-  background-color: #1950A3;
-  margin: 0px 0px 0px 0px;
-  text-align: left;
-  text-indent: 30px;
+/**
+in CSS: 
+	id -- references an HTML tag (i.e. h1, body, etc)
+	#xxx -- references the id of an element (i.e. <div id="xxx" />)
+			-- id us unique (use for layout and exceptions)
+	.xxx -- references a class (i.e. <div class="xxx">)
+			-- class for reuse, for general case
+**/
+html,body {
+	height: 100%;
+	margin: 0;
+}
+
+div {
+	border: inset;
+	border-color: black;
+	box-sizing: border-box
+}
+
+#wrapper {
+	height: 100%;
+	width: 100%;
+}
+
+#north {
+	margin: 0;
+	height: 80%;
+	height: 10%;
+}
+
+#south {
+	margin: 0;
+	height: 10%;
+	background: pink;
+}
+
+#east {
+	margin: 0;
+	width: 6em;
+	float: left;
+	margin-right: 1.1em
+}
+
+#west {
+	margin: 0;
+	width: 6em;
+	float: right;
+	margin-left: 1.1em
+}
+
+#center {
+	margin: 0;
+	height: 80%;
+}
+
+#center:after {
+	content: ' ';
+	clear: both;
+	display: block;
+	overflow: hidden
+}
+
+.banner {
+	font-size: 2em;
+	font-weight: bold;
+	color: white;
+	background-color: #1950A3;
+	margin: 0px 0px 0px 0px;
+	text-align: left;
+	text-indent: 30px;
 }
 
 .sendButton {
-  display: block;
-  font-size: 16pt;
+	display: block;
+	font-size: 16pt;
 }
 
 /** Most GWT widgets already have a style name defined */
 .gwt-DialogBox {
-  width: 400px;
+	width: 400px;
 }
 
 .dialogVPanel {
-  margin: 5px;
+	margin: 5px;
 }
 
 .serverResponseLabelError {
-  color: red;
+	color: red;
 }
 
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
-  margin: 15px 6px 6px;
+	margin: 15px 6px 6px;
 }
