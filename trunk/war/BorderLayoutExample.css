@@ -1,0 +1,60 @@
+/** Add css rules here for your application. */
+/** Example rules used by the template application (remove for your app) */
+/**
+in CSS: 
+	id -- references an HTML tag (i.e. h1, body, etc)
+	#xxx -- references the id of an element (i.e. <div id="xxx" />)
+			-- id us unique (use for layout and exceptions)
+	.xxx -- references a class (i.e. <div class="xxx">)
+			-- class for reuse, for general case
+**/
+html,body {
+	height: 100%;
+	margin: 0;
+}
+
+div { border : 1px solid #d3d3e3 }
+
+#north    { margin:0;  padding:1em;  }        
+#south    { margin:0;  padding:1em;  }        
+#east     { margin:0;  padding:1em;  width:6em; height:22em; float:left; margin-right:1.1em }        
+#west     { margin:0;  padding:1em;  width:6em; height:22em; float:right; margin-left:1.1em }        
+#center   { margin:0;  padding:1em;  padding-bottom:0em; }        
+#center:after    { content:' '; clear:both; display:block; height:0; overflow:hidden }
+
+
+
+h1 {
+	font-size: 2em;
+	font-weight: bold;
+	color: white;
+	background-color: #1950A3;
+	margin: 0px 0px 0px 0px;
+	text-align: left;
+	text-indent: 30px;
+}
+
+
+
+.sendButton {
+	display: block;
+	font-size: 16pt;
+}
+
+/** Most GWT widgets already have a style name defined */
+.gwt-DialogBox {
+	width: 400px;
+}
+
+.dialogVPanel {
+	margin: 5px;
+}
+
+.serverResponseLabelError {
+	color: red;
+}
+
+/** Set ids using widget.getElement().setId("idOfElement") */
+#closeButton {
+	margin: 15px 6px 6px;
+}
