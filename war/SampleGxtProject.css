@@ -8,31 +8,48 @@ in CSS:
 	.xxx -- references a class (i.e. <div class="xxx">)
 			-- class for reuse, for general case
 **/
-html,body {
-	height: 100%;
-	margin: 0;
+html {
+	min-height: 100%;
+	position: relative
+} /* make sure it is at least as tall as the viewport */
+body {
+	height: 100%
 }
 
 div {
-	border: inset;
+	border-style: inset;
+	border-width: 1px;
 	border-color: black;
 	box-sizing: border-box
 }
 
 #wrapper {
-	height: 100%;
-	width: 100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: hidden;
+	z-index: -1
 }
 
 #north {
 	margin: 0;
-	height: 80%;
-	height: 10%;
+}
+
+#north h1 {
+	font-size: 2em; 24
+	font-weight: bold;
+	color: white;
+	background-color: #1950A3;
+	margin: 0px 0px 0px 0px;
+	text-align: left;
+	text-indent: 30px;
 }
 
 #south {
 	margin: 0;
-	height: 10%;
+	height: 100%;
 	background: pink;
 }
 
@@ -52,7 +69,7 @@ div {
 
 #center {
 	margin: 0;
-	height: 80%;
+	height: 90%;
 }
 
 #center:after {
@@ -70,11 +87,6 @@ div {
 	margin: 0px 0px 0px 0px;
 	text-align: left;
 	text-indent: 30px;
-}
-
-.sendButton {
-	display: block;
-	font-size: 16pt;
 }
 
 /** Most GWT widgets already have a style name defined */
