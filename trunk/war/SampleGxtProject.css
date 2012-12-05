@@ -17,10 +17,12 @@ body {
 }
 
 div {
+	/**
 	border-style: inset;
 	border-width: 1px;
 	border-color: black;
 	box-sizing: border-box
+	**/
 }
 
 #wrapper {
@@ -56,6 +58,7 @@ div {
 #east {
 	margin: 0;
 	width: 6em;
+	height: 90%;
 	float: left;
 	margin-right: 1.1em
 }
@@ -63,6 +66,7 @@ div {
 #west {
 	margin: 0;
 	width: 6em;
+	height: 90%;
 	float: right;
 	margin-left: 1.1em
 }
