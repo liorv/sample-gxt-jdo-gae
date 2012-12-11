@@ -1,4 +1,4 @@
-package sample.client;
+package jdo;
 
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;

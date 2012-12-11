@@ -28,7 +28,7 @@ import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 
-public class Example_JsonGrid implements IsWidget
+public class Example_JsonEmailGrid implements IsWidget
 {
 
   /*

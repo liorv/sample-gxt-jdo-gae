@@ -1,5 +1,5 @@
 
-package sample.client;
+package jdo;
 
 import javax.jdo.annotations.PersistenceCapable;
 

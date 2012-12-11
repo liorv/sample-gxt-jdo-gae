@@ -1,4 +1,4 @@
-package sample.client;
+package jdo;
 
 import java.util.Date;
 

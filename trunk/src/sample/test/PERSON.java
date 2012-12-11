@@ -3,7 +3,8 @@ package sample.test;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 
-import sample.client.BaseDataObject;
+import jdo.BaseDataObject;
+
 
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)

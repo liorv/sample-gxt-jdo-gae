@@ -54,12 +54,12 @@ public class MiniTest
     
     Extent<TEAM> teamx = session.getPM().getExtent(TEAM.class);
     for (TEAM team : teamx) {
-      System.out.println("+ TEAM: ["+team.name+"], id=["+session.getPM().getObjectId(team)+"]");
+      System.out.println("+ TEAM: ["+team.getName()+"], id=["+session.getPM().getObjectId(team)+"]");
     }
     
     Extent<PERSON> personx = session.getPM().getExtent(PERSON.class);
     for (PERSON person : personx) {
-      System.out.println("+ PERSON: ["+person.name+"], id=["+session.getPM().getObjectId(person)+"]");
+      System.out.println("+ PERSON: ["+person.getName()+"], id=["+session.getPM().getObjectId(person)+"]");
     }
     
     session.close();

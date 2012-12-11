@@ -5,7 +5,7 @@ import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.PropertyAccess;
 
-public class EmailInterfaces
+public class Example_EmailInterfaces
 {
   public static interface Email
   {
