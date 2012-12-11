@@ -24,15 +24,12 @@ abstract public class LVGrid<POJO, POJO_PROPS extends PropertyAccess<POJO>> impl
 
   protected AutoBeanFactory factory;
 
-  private Class<POJO_PROPS> propsClz;
-
-  public LVGrid(Class<POJO_PROPS> propsClz) {
-    this.propsClz = propsClz;
+  public LVGrid() {
   }
 
   @Override
   public Widget asWidget() {
-    props = GWT.create(propsClz);
+    props = createProps();
 
     factory = GWT.create(AutoBeanFactory.class);
 
@@ -52,6 +49,8 @@ abstract public class LVGrid<POJO, POJO_PROPS extends PropertyAccess<POJO>> impl
   }
 
   abstract protected ColumnModel<POJO> createModel();
+  
+  abstract protected POJO_PROPS createProps();
 
   abstract protected ListStore<POJO> createListStore();
 

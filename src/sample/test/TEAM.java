@@ -7,7 +7,8 @@ import javax.jdo.annotations.Element;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
-import sample.client.BaseDataObject;
+import jdo.BaseDataObject;
+
 
 
 import com.google.appengine.datanucleus.annotations.Unowned;

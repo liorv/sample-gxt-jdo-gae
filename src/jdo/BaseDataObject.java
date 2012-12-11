@@ -1,11 +1,10 @@
-package sample.client;
+package jdo;
 
 import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
-import jdo.DataObject;
 
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
@@ -16,8 +15,24 @@ abstract public class BaseDataObject extends DataObject
   }
 
   @Persistent
-  public String description;
+  protected String description;
 
   @Persistent
-  public String icon;
+  protected String icon;
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getIcon() {
+    return icon;
+  }
+
+  public void setIcon(String icon) {
+    this.icon = icon;
+  }
 }

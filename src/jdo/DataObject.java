@@ -14,12 +14,28 @@ import jdo.key.KFProvider;
 
 abstract public class DataObject
 { 
+  public String getPk() {
+    return pk;
+  }
+
+  public void setPk(String pk) {
+    this.pk = pk;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
   @PrimaryKey
   @Persistent
-  public String pk;
+  protected String pk;
 
   @Persistent
-  public String name;
+  protected String name;
 
   protected <T> DataObject(Class<T> clz, String id) {
     this.name = id;
@@ -36,6 +52,11 @@ abstract public class DataObject
     }
     return false;
   };
+  
+  @Override
+  public int hashCode() {
+    return pk.hashCode();
+  }
 
   @Override
   public String toString() {

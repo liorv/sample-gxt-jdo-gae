@@ -1,22 +1,10 @@
-package sample.client;
+package jdo;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.jdo.Extent;
-import javax.jdo.Query;
 import javax.jdo.annotations.PersistenceAware;
-
-import sample.client.Category;
-import sample.client.Grouping;
-import sample.client.Rated;
-import sample.client.Reward;
-
-import jdo.DataObject;
-import jdo.JDOException;
-import jdo.JDOSession;
-import jdo.JDOUtils;
 
 @PersistenceAware
 public class TestJDO
@@ -28,15 +16,24 @@ public class TestJDO
     attachCategory("Girls", "Looks");
     rate("Nadine", "Looks", 10);
     rate("Nadine", "Looks", 9);
-    
-    addToGroup("Girls", "Anna");
-    attachCategory("Girls", "Looks");
-    rate("Anna", "Looks", 85);
-    
-    JDOSession session = JDOSession.open(true);
-    Grouping g = session.find(Grouping.class, "Girls");
-    session.getPM().deletePersistent(g);
-    session.close();
+
+    addToGroup("Girls", "Anna"); // after category attached
+    attachCategory("Girls", "Looks"); // attach again
+    rate("Anna", "Looks", 8);
+    rate("Lily", "Looks", 6); // before she got added
+
+    addToGroup("Girls", "Lily");
+    rate("Lily", "Looks", 5);
+
+    addToGroup("Boys", "Dave");
+    attachCategory("Boys", "Looks");
+    rate("Dave", "Looks", 8);
+
+    /*
+     * JDOSession session = JDOSession.open(true); Grouping g =
+     * session.find(Grouping.class, "Girls");
+     * session.getPM().deletePersistent(g); session.close();
+     */
   }
 
   private static void rate(String rated, String category, int score) {
@@ -48,32 +45,20 @@ public class TestJDO
   }
 
   private static void addToGroup(String group, String rated) {
-    JDOSession session = JDOSession.open();
+    JDOSession session = JDOSession.open();    
     Rated r = session.find(Rated.class, rated);
-    Grouping g = session.find(Grouping.class, group);
+    Grouping g = session.find(Grouping.class, group);    
     g.addMember(r);
     session.close();
   }
 
   private static void attachCategory(String group, String category) {
+
     JDOSession session = JDOSession.open();
     Category c = session.find(Category.class, category);
     Grouping g = session.find(Grouping.class, group);
-    c.addGroup(g);
+    g.attachCategory(c);
     session.close();
-  }
-
-  public static <T> T find(Class<T> clz, String id) {
-    JDOSession session = JDOSession.open();
-    Query q = session.getPM().newQuery(Rated.class);
-    q.setFilter("id == idParam");
-    q.declareParameters("String idParam");
-
-    @SuppressWarnings("unchecked")
-    List<T> retval = (List<T>) q.execute(id);
-
-    session.close();
-    return retval.get(0);
   }
 
   public static String[] peopleNames = {
@@ -127,7 +112,7 @@ public class TestJDO
     try {
       printState("START");
 
-      JDOUtils.clear(Rated.class);      
+      JDOUtils.clear(Rated.class);
       JDOUtils.clear(Grouping.class);
       JDOUtils.clear(Category.class);
       JDOUtils.clear(Reward.class);
@@ -162,11 +147,14 @@ public class TestJDO
     System.out.println();
   }
 
-  private static <T extends DataObject> void printExtent(JDOSession session, Class<T> clz) {
+  private static <T extends DataObject> void printExtent(JDOSession session,
+      Class<T> clz)
+  {
     Extent<T> ex = session.getPM().getExtent(clz);
     for (T o : ex) {
-      System.out.println("+ "+clz.getSimpleName()+": ["+o.name+"], id=["+session.getPM().getObjectId(o)+"]");
-    }    
+      System.out.println("+ " + clz.getSimpleName() + ": [" + o.name
+          + "], id=[" + session.getPM().getObjectId(o) + "]");
+    }
   }
 
 }

@@ -5,9 +5,10 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import sample.client.gxt.EmailInterfaces.Email;
-import sample.client.gxt.EmailInterfaces.EmailProperties;
+import sample.client.gxt.Example_EmailInterfaces.Email;
+import sample.client.gxt.Example_EmailInterfaces.EmailProperties;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.loader.ListLoadConfig;
@@ -21,10 +22,10 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.grid.ColumnConfig;
 import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 
-public class Example_SimplifiedGrid extends LVGrid<Email, EmailProperties>
+public class Example_SimplifiedEmailGrid extends LVGrid<Email, EmailProperties>
 {
-  public Example_SimplifiedGrid() {
-    super(EmailProperties.class);
+  public Example_SimplifiedEmailGrid() {
+    super();
   }
 
   @Override
@@ -54,7 +55,7 @@ public class Example_SimplifiedGrid extends LVGrid<Email, EmailProperties>
   @Override
   protected ListStore<Email> createListStore() {
     ListStore<Email> store = new ListStore<Email>(props.key());
-    store.addAll(makeEmails());
+    //store.addAll(makeEmails());
     return store;
   }
 
@@ -125,6 +126,11 @@ public class Example_SimplifiedGrid extends LVGrid<Email, EmailProperties>
         return emailTemplate[1] + i;
       }
     };
+  }
+
+  @Override
+  protected EmailProperties createProps() {
+    return GWT.create(EmailProperties.class);
   }
 
 }
