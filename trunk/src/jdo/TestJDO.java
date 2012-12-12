@@ -72,7 +72,7 @@ public class TestJDO
 
   public static String[] categoryNames = { "Math", "Looks" };
 
-  public static boolean[] categoryIsPercent = { true, false };
+  public static int[] categoryMax = { 100, 50 };
 
   public static String[] rewardNames = { "Gold", "Silver" };
 
@@ -95,7 +95,7 @@ public class TestJDO
   public static Set<Category> createCategories() {
     HashSet<Category> categories = new HashSet<Category>();
     for (int i = 0; i < categoryNames.length; i++) {
-      categories.add(new Category(categoryNames[i], categoryIsPercent[i]));
+      categories.add(new Category(categoryNames[i], categoryMax[i]));
     }
     return categories;
   }

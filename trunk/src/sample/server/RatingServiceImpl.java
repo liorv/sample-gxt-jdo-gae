@@ -79,8 +79,9 @@ public class RatingServiceImpl implements RatingService
   public List<StatsDTO> loadData() {
     TestJDO.run();
     JDOSession session = JDOSession.open();
-
-    return toDTO(session.getPM().getExtent(StatRelation.class));
+    List<StatsDTO> retval = toDTO(session.getPM().getExtent(StatRelation.class));
+    session.close();
+    return retval;
   }
 
   private LinkedList<StatsDTO> toDTO(Iterable<StatRelation> stats) {

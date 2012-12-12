@@ -13,7 +13,7 @@ import com.google.appengine.datanucleus.annotations.Unowned;
 public class Category extends BaseDataObject
 {
   @Persistent
-  protected boolean isPercent;
+  protected int max;
 
   @Persistent
   @Unowned
@@ -27,20 +27,20 @@ public class Category extends BaseDataObject
   @Unowned
   protected Set<StatRelation> groupStats;
 
-  protected Category(String id, boolean isPercent) {
+  protected Category(String id, int max) {
     super(Category.class, id);
-    this.isPercent = isPercent;
+    this.max = max;
     groups = new HashSet<Grouping>();
     groupStats = new HashSet<StatRelation>();
     ratedStats = new HashSet<StatRelation>();
   }
 
-  public boolean isPercent() {
-    return isPercent;
+  public int getMax() {
+    return max;
   }
 
-  public void setPercent(boolean isPercent) {
-    this.isPercent = isPercent;
+  public void setMax(int max) {
+    this.max = max;
   }
 
   public void rate(Rated rated, float score) {

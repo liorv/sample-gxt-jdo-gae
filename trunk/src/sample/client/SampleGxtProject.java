@@ -2,6 +2,7 @@ package sample.client;
 
 import java.util.List;
 
+import sample.client.gxt.CategoryEditor;
 import sample.client.gxt.RatedCategoryGrid;
 import sample.client.gxt.StatsDTO;
 
@@ -12,6 +13,13 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.sencha.gxt.core.client.util.Margins;
+import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutData;
+import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.VBoxLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.VBoxLayoutContainer.VBoxLayoutAlign;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -36,13 +44,23 @@ public class SampleGxtProject implements EntryPoint
 
     final RatedCategoryGrid grid = new RatedCategoryGrid();
 
-    RootPanel.get("sendDiv").add(loadButton);
-    RootPanel.get("sendDiv").add(ratedButton);
-    RootPanel.get("sendDiv").add(groupButton);
-    RootPanel.get("sendDiv").add(categoryRatedButton);
-    RootPanel.get("sendDiv").add(categoryGroupButton);
-
-    RootPanel.get("gridDiv").add(grid);
+    VerticalLayoutContainer vc = new VerticalLayoutContainer();
+    BoxLayoutData layoutData = new BoxLayoutData(new Margins(5, 0, 0, 5));
+    
+    vc.add(grid);
+    
+    vc.add(new CategoryEditor());
+   
+    HorizontalLayoutContainer panelTestButtons = new HorizontalLayoutContainer();
+    panelTestButtons.add(loadButton);
+    panelTestButtons.add(ratedButton);
+    panelTestButtons.add(groupButton);
+    panelTestButtons.add(categoryRatedButton);
+    panelTestButtons.add(categoryGroupButton);
+    
+    vc.add(panelTestButtons);
+    
+    RootPanel.get().add(vc);
 
     class AsyncCB implements AsyncCallback<List<StatsDTO>>
     {

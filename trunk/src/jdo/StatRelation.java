@@ -12,10 +12,8 @@ import com.google.appengine.datanucleus.annotations.Unowned;
 @PersistenceCapable(identityType = IdentityType.DATASTORE)
 public class StatRelation
 {
-  protected StatRelation(Category c, String name, Class<?> clz,
-      boolean isPercent)
+  protected StatRelation(Category c, String name, Class<?> clz)
   {
-    this.isPercent = isPercent;
     this.category = c;
     this.name = name;
     reset();
@@ -24,9 +22,6 @@ public class StatRelation
   @PrimaryKey
   @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
   private Key key;
-
-  @Persistent
-  private boolean isPercent;
 
   @Persistent
   private float min;
@@ -60,14 +55,6 @@ public class StatRelation
 
   public void setKey(Key key) {
     this.key = key;
-  }
-
-  public boolean isPercent() {
-    return isPercent;
-  }
-
-  public void setPercent(boolean isPercent) {
-    this.isPercent = isPercent;
   }
 
   public float getMin() {

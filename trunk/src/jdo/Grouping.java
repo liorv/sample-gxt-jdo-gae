@@ -36,8 +36,7 @@ public class Grouping extends BaseDataObject
     for (StatRelation stat : stats) {
       if (stat.getCategory().equals(c)) { return stat; }
     }
-    StatRelation newStat =
-        new StatRelation(c, getName(), Grouping.class, c.isPercent);
+    StatRelation newStat = new StatRelation(c, getName(), Grouping.class);
     stats.add(newStat);
     return newStat;
   }
