@@ -12,7 +12,7 @@ import javax.jdo.annotations.Persistent;
 public class Rated extends BaseDataObject
 {
   protected Rated(String id) {
-    super(Rated.class, id); 
+    super(Rated.class, id);
     rewardCases = new HashSet<RewardCase>();
     stats = new HashSet<StatRelation>();
   }
@@ -38,8 +38,7 @@ public class Rated extends BaseDataObject
       if (stat.getCategory().equals(c)) { return stat; }
     }
 
-    StatRelation newStat =
-        new StatRelation(c, getName(), Rated.class, c.isPercent);
+    StatRelation newStat = new StatRelation(c, getName(), Rated.class);
     stats.add(newStat);
     return newStat;
   }
@@ -61,10 +60,10 @@ public class Rated extends BaseDataObject
   }
 
   @Persistent
-  @Element(dependent="true")
+  @Element(dependent = "true")
   protected Set<RewardCase> rewardCases;
 
   @Persistent
-  @Element(dependent="true")
+  @Element(dependent = "true")
   protected Set<StatRelation> stats;
 }
