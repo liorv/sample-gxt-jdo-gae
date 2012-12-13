@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.Viewport;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -58,7 +59,9 @@ public class SampleGxtProject implements EntryPoint
     
     vc.add(panelTestButtons);
     
-    RootPanel.get().add(vc);
+    Viewport vp = new Viewport();
+    vp.add(vc);
+    RootPanel.get().add(vp);
 
     class AsyncCB implements AsyncCallback<List<StatsDTO>>
     {

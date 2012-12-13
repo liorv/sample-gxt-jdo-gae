@@ -16,6 +16,7 @@ import com.sencha.gxt.data.shared.PropertyAccess;
 import com.sencha.gxt.widget.core.client.FramedPanel;
 import com.sencha.gxt.widget.core.client.ListView;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
 
 public class GroupEditor implements IsWidget
 {
@@ -27,10 +28,10 @@ public class GroupEditor implements IsWidget
     ValueProvider<GroupDTO, Set<String>> categories();
   }
 
-  private List<GroupDTO> groups;
+  private List<GroupDTO> groups = new LinkedList<GroupDTO>();
   
-  public GroupEditor(List<GroupDTO> groups) {
-    this.groups = groups;
+  public GroupEditor(List<GroupDTO> groupsList) {
+    this.groups = groupsList;
     
     // HACK... remove later...
     groups = new LinkedList<GroupDTO>();    
@@ -54,6 +55,9 @@ public class GroupEditor implements IsWidget
     s.addAll(groups);
     ListView<GroupDTO, String> l = new ListView<GroupDTO, String>(s, props.name());
     p.add(l);
+    
+    GroupFilterField sl = new GroupFilterField(l);
+    p.add(sl);
 
     panel.add(p);
     return panel;
