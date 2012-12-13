@@ -7,7 +7,18 @@
             http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
-	<context:component-scan base-package="sample.server" />
+	<context:component-scan base-package="jdo" />
+	<context:component-scan base-package="jdo.key" />
+	<context:component-scan base-package="sample.server" />	
+	<context:component-scan base-package="sample.client" />
+	<context:component-scan base-package="sample.test" />
 
 	<bean id="contextApplicationContextProvider" class="context.ApplicationContextProvider" />
+	
+	<bean id="keyfactory" class="jdo.key.BasicKeyFactory" />
+	
+	<bean id="safePersistMode" class="java.lang.Boolean" factory-method="valueOf">
+		<constructor-arg value="true" />
+	</bean>
+	
 </beans>
