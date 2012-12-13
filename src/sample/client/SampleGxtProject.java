@@ -3,6 +3,7 @@ package sample.client;
 import java.util.List;
 
 import sample.client.gxt.CategoryEditor;
+import sample.client.gxt.GroupEditor;
 import sample.client.gxt.RatedCategoryGrid;
 import sample.client.gxt.StatsDTO;
 
@@ -13,12 +14,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.sencha.gxt.core.client.util.Margins;
-import com.sencha.gxt.widget.core.client.container.BorderLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutData;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.VBoxLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.VBoxLayoutContainer.VBoxLayoutAlign;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 
 /**
@@ -45,11 +41,13 @@ public class SampleGxtProject implements EntryPoint
     final RatedCategoryGrid grid = new RatedCategoryGrid();
 
     VerticalLayoutContainer vc = new VerticalLayoutContainer();
-    BoxLayoutData layoutData = new BoxLayoutData(new Margins(5, 0, 0, 5));
+    //BoxLayoutData layoutData = new BoxLayoutData(new Margins(5, 0, 0, 5));
     
     vc.add(grid);
     
     vc.add(new CategoryEditor());
+    
+    vc.add(new GroupEditor(null));
    
     HorizontalLayoutContainer panelTestButtons = new HorizontalLayoutContainer();
     panelTestButtons.add(loadButton);
