@@ -5,6 +5,7 @@
   
   <!-- LIOR STEP 2 -->
   <inherits name='com.sencha.gxt.ui.GXT'/>
+  <inherits name="com.google.gwt.resources.Resources" />
 
   <!-- Inherit the default GWT style sheet.  You can change       -->
   <!-- the theme of your GWT application by uncommenting          -->
