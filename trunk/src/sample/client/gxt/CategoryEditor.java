@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.FramedPanel;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
@@ -15,10 +14,6 @@ import com.sencha.gxt.widget.core.client.form.TextField;
 
 public class CategoryEditor implements IsWidget
 {
-  public void onModuleLoad() {
-    RootPanel.get().add(asWidget());
-  }
-
   @Override
   public Widget asWidget() {
     FramedPanel panel = new FramedPanel();

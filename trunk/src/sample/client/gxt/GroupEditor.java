@@ -1,48 +1,61 @@
 package sample.client.gxt;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
+import com.google.gwt.core.shared.GWT;
+import com.google.gwt.editor.client.Editor.Path;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.sencha.gxt.core.client.ValueProvider;
+import com.sencha.gxt.data.shared.ListStore;
+import com.sencha.gxt.data.shared.ModelKeyProvider;
+import com.sencha.gxt.data.shared.PropertyAccess;
 import com.sencha.gxt.widget.core.client.FramedPanel;
-import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
+import com.sencha.gxt.widget.core.client.ListView;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData;
-import com.sencha.gxt.widget.core.client.form.FieldLabel;
-import com.sencha.gxt.widget.core.client.form.TextField;
 
 public class GroupEditor implements IsWidget
 {
-  public void onModuleLoad() {
-    RootPanel.get().add(asWidget());
+  public interface GroupProperties extends PropertyAccess<GroupDTO> {
+    @Path("name")
+    ModelKeyProvider<GroupDTO> key();
+    ValueProvider<GroupDTO, String> name();
+    ValueProvider<GroupDTO, Set<String>> members();
+    ValueProvider<GroupDTO, Set<String>> categories();
+  }
+
+  private List<GroupDTO> groups;
+  
+  public GroupEditor(List<GroupDTO> groups) {
+    this.groups = groups;
+    
+    // HACK... remove later...
+    groups = new LinkedList<GroupDTO>();    
+    HashSet<String> members = new HashSet<String>();
+    members.add("Michael Jordan");
+    members.add("Larry Bird");
+    members.add("Magic Johnson");
+    groups.add(new GroupDTO("raptors", members, new HashSet<String>()));
+    groups.add(new GroupDTO("bulls", new HashSet<String>(), new HashSet<String>()));
+    groups.add(new GroupDTO("nets", new HashSet<String>(), new HashSet<String>()));
   }
 
   @Override
   public Widget asWidget() {
     FramedPanel panel = new FramedPanel();
-    panel.setHeadingText("Edit Rating Category");
+    panel.setHeadingText("Edit Group");
     VerticalLayoutContainer p = new VerticalLayoutContainer();
+
+    GroupProperties props = GWT.create(GroupProperties.class);
+    ListStore<GroupDTO> s = new ListStore<GroupDTO>(props.key());
+    s.addAll(groups);
+    ListView<GroupDTO, String> l = new ListView<GroupDTO, String>(s, props.name());
+    p.add(l);
+
     panel.add(p);
-
-    TextField categoryName = new TextField();
-    categoryName.setAllowBlank(false);
-    categoryName.setEmptyText("Enter category name...");
-    p.add(new FieldLabel(categoryName, "Category"), new VerticalLayoutData());
-    
-    
-    HorizontalLayoutContainer categoryType = new HorizontalLayoutContainer();
-    List<String> categoryTypes = new LinkedList<String>();
-    categoryTypes.add("Percent");
-    categoryTypes.add("Number");
-    categoryTypes.add("Boolean");
-    MyRadioGroup<String> iwidget = new MyRadioGroup<String>("categoryType", categoryType, categoryTypes);
-    //MyComboBox<String> iwidget = new MyComboBox<String>(categoryTypes);
-
-    p.add(new FieldLabel(iwidget.asWidget(), "Type"), new VerticalLayoutData());
-
-
     return panel;
   }
 }
