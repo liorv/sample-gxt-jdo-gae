@@ -2,10 +2,10 @@ package sample.client;
 
 import java.util.List;
 
+import sample.client.dto.StatsDTO;
 import sample.client.gxt.CategoryEditor;
 import sample.client.gxt.GroupEditor;
 import sample.client.gxt.RatedCategoryGrid;
-import sample.client.gxt.StatsDTO;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -48,7 +48,7 @@ public class SampleGxtProject implements EntryPoint
     
     vc.add(new CategoryEditor());
     
-    vc.add(new GroupEditor(null));
+    vc.add(new GroupEditor(null, null, null));
    
     HorizontalLayoutContainer panelTestButtons = new HorizontalLayoutContainer();
     panelTestButtons.add(loadButton);
