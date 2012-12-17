@@ -13,7 +13,7 @@ import jdo.TestJDO;
 import org.springframework.stereotype.Service;
 
 import sample.client.RatingService;
-import sample.client.gxt.StatsDTO;
+import sample.client.dto.StatsDTO;
 
 /**
  * The server side implementation of the RPC service.

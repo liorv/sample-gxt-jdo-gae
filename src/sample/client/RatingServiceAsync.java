@@ -2,7 +2,7 @@ package sample.client;
 
 import java.util.List;
 
-import sample.client.gxt.StatsDTO;
+import sample.client.dto.StatsDTO;
 
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
