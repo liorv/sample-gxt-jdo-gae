@@ -26,6 +26,22 @@ public class Grouping extends BaseDataObject
   @Element(dependent = "false")
   protected Set<Category> categories;
 
+  public Set<Rated> getMembers() {
+    return members;
+  }
+
+  public void setMembers(Set<Rated> members) {
+    this.members = members;
+  }
+
+  public Set<Category> getCategories() {
+    return categories;
+  }
+
+  public void setCategories(Set<Category> categories) {
+    this.categories = categories;
+  }
+
   protected Grouping(String id) {
     super(Grouping.class, id);
     members = new HashSet<Rated>();

@@ -1,14 +1,19 @@
 package sample.client.gxt;
 
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 
+import sample.client.RatingService;
+import sample.client.RatingServiceAsync;
+import sample.client.dto.NamedDTO;
+import sample.client.dto.CategoryDTO;
 import sample.client.dto.GroupDTO;
 import sample.client.dto.RatedDTO;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.editor.client.Editor.Path;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.ValueProvider;
@@ -20,6 +25,8 @@ import com.sencha.gxt.dnd.core.client.ListViewDragSource;
 import com.sencha.gxt.dnd.core.client.ListViewDropTarget;
 import com.sencha.gxt.widget.core.client.FramedPanel;
 import com.sencha.gxt.widget.core.client.ListView;
+import com.sencha.gxt.widget.core.client.PlainTabPanel;
+import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutData;
 import com.sencha.gxt.widget.core.client.container.Container;
 import com.sencha.gxt.widget.core.client.container.HBoxLayoutContainer;
@@ -32,48 +39,103 @@ import com.sencha.gxt.widget.core.client.form.FormPanel.LabelAlign;
 
 public class GroupEditor implements IsWidget
 {
-  public interface RatedProps extends PropertyAccess<RatedDTO>
-  {
-    @Path("name")
-    ModelKeyProvider<RatedDTO> key();
+  public GroupEditor() {
+    namedProps = GWT.create(NamedProps.class);
 
-    ValueProvider<RatedDTO, String> name();
+    allStoreRated = new ListStore<RatedDTO>(namedProps.key());
+
+    groupStoreRated = new ListStore<RatedDTO>(namedProps.key());
+
+    allStoreCat = new ListStore<CategoryDTO>(namedProps.key());
+
+    groupStoreCat = new ListStore<CategoryDTO>(namedProps.key());
+
+    group = new GroupDTO("", new HashSet<RatedDTO>(), new HashSet<CategoryDTO>());
   }
 
-  private RatedProps props = GWT.create(RatedProps.class);
+  public interface NamedProps<T extends NamedDTO> extends PropertyAccess<T>
+  {
+    @Path("name")
+    ModelKeyProvider<NamedDTO> key();
 
-  private List<RatedDTO> listAllRated = new LinkedList<RatedDTO>();
+    ValueProvider<NamedDTO, String> name();
+  }
 
-  private List<RatedDTO> members = new LinkedList<RatedDTO>();
+  private final RatingServiceAsync ratingService = GWT
+      .create(RatingService.class);
+
+  private NamedProps<?> namedProps;
+
+  private ListStore<RatedDTO> allStoreRated;
+
+  private ListStore<RatedDTO> groupStoreRated;
+
+  private ListStore<CategoryDTO> allStoreCat;
+
+  private ListStore<CategoryDTO> groupStoreCat;
 
   private GroupDTO group;
 
-  public GroupEditor(GroupDTO group, List<RatedDTO> listAllRated,
-      List<RatedDTO> members)
-  {
-    this.group = group;
-    this.listAllRated = listAllRated;
-    this.members = members;
-
-    // HACK... remove later...
-    //TODO
-    this.group =
-        new GroupDTO("Lakers", new HashSet<String>(), new HashSet<String>());
-    
-    listAllRated = new LinkedList<RatedDTO>();
-    listAllRated.add(new RatedDTO("Michael Jordan"));
-    listAllRated.add(new RatedDTO("Larry Bird"));
-    listAllRated.add(new RatedDTO("Magic Johnson"));
-    this.listAllRated = listAllRated;
-  }
-
   @Override
   public Widget asWidget() {
-    Container left = createLeft();
-    Container right = createRight();
+    ratingService.getAllCategories(new AsyncCallback<List<CategoryDTO>>() {
+
+      @Override
+      public void onSuccess(List<CategoryDTO> result) {
+        allStoreCat.addAll(result);
+      }
+
+      @Override
+      public void onFailure(Throwable caught) {}
+    });
+
+    ratingService.getAllRated(new AsyncCallback<List<RatedDTO>>() {
+      @Override
+      public void onSuccess(List<RatedDTO> result) {
+        allStoreRated.addAll(result);
+      }
+
+      @Override
+      public void onFailure(Throwable caught) {}
+    });
+
+    if (group != null && group.getName().length() > 0) {
+      ratingService.getGroup(group.getName(), new AsyncCallback<GroupDTO>() {
+        @Override
+        public void onSuccess(GroupDTO result) {
+          groupStoreCat.addAll(result.getCategories());
+          groupStoreRated.addAll(result.getMembers());
+        }
+
+        @Override
+        public void onFailure(Throwable caught) {}
+      });
+    }
 
     FramedPanel panel = new FramedPanel();
-    panel.setHeadingText("Edit Group");
+    panel.setHeadingText("Edit group [" + group.getName() + "]");
+
+    Container membershipPanel = createEditMembershipPanel();
+    Container categoryPanel = createEditCategoriesPanel();
+
+    PlainTabPanel tabPanel = new PlainTabPanel();
+    tabPanel.setPixelSize(-1, 400);
+    TabItemConfig membersTab = new TabItemConfig("Membership");
+    TabItemConfig categoryTab = new TabItemConfig("Categories");
+
+    tabPanel.add(membershipPanel, membersTab);
+    tabPanel.add(categoryPanel, categoryTab);
+    tabPanel.setHeight(350);
+
+    panel.add(tabPanel);
+    return panel;
+  }
+
+  private Container createEditMembershipPanel() {
+    Container left = createLeftPanel("Population", allStoreRated);
+    Container right = createRightPanel("Members", groupStoreRated);
+
+    SimpleContainer panel = new SimpleContainer();
     HBoxLayoutContainer hbox = new HBoxLayoutContainer(HBoxLayoutAlign.STRETCH);
 
     BoxLayoutData flex = new BoxLayoutData(new Margins(5, 5, 0, 0));
@@ -81,51 +143,54 @@ public class GroupEditor implements IsWidget
     hbox.add(left, flex);
     hbox.add(right, flex);
     panel.setWidget(hbox);
-    panel.setHeight(350);
-
     return panel;
   }
 
-  private Container createRight() {
+  private Container createEditCategoriesPanel() {
+    Container left = createLeftPanel("All Categories", allStoreCat);
+    Container right = createRightPanel("Attached", groupStoreCat);
+
+    SimpleContainer panel = new SimpleContainer();
+    HBoxLayoutContainer hbox = new HBoxLayoutContainer(HBoxLayoutAlign.STRETCH);
+
+    BoxLayoutData flex = new BoxLayoutData(new Margins(5, 5, 0, 0));
+    flex.setFlex(1);
+    hbox.add(left, flex);
+    hbox.add(right, flex);
+    panel.setWidget(hbox);
+    return panel;
+  }
+
+  private <T extends NamedDTO> Container createRightPanel(String label,
+      ListStore<T> listStore)
+  {
     // right list
     VBoxLayoutContainer vc_right =
         new VBoxLayoutContainer(VBoxLayoutAlign.STRETCH);
-    ListStore<RatedDTO> s2 = new ListStore<RatedDTO>(props.key());
-    ListView<RatedDTO, String> listMembers = createList(s2);
+    ListView<T, String> listViewAll = createList(listStore);
 
-    FieldLabel fl_members = new FieldLabel(listMembers, "Members");
-    fl_members.setLabelAlign(LabelAlign.TOP);
+    FieldLabel fieldLabelAll = new FieldLabel(listViewAll, label);
+    fieldLabelAll.setLabelAlign(LabelAlign.TOP);
 
-    vc_right.add(fl_members);
+    vc_right.add(fieldLabelAll);
     SimpleContainer right = makePanel();
 
     right.setWidget(vc_right);
     return right;
   }
 
-  private ListView<RatedDTO, String> createList(ListStore<RatedDTO> s) {
-    ListView<RatedDTO, String> list =
-        new ListView<RatedDTO, String>(s, props.name());
-    list.setSize("-1", "20em");
-
-    new ListViewDragSource<RatedDTO>(list);
-    new ListViewDropTarget<RatedDTO>(list);
-
-    return list;
-  }
-
-  private Container createLeft() {
+  private <T extends NamedDTO> Container createLeftPanel(String label,
+      ListStore<T> allStore)
+  {
     VBoxLayoutContainer vc_left =
         new VBoxLayoutContainer(VBoxLayoutAlign.STRETCH);
 
     // left list
-    ListStore<RatedDTO> s1 = new ListStore<RatedDTO>(props.key());
-    s1.addAll(listAllRated);
-    ListView<RatedDTO, String> listPopulation = createList(s1);
+    ListView<T, String> lvAll = createList(allStore);
 
-    FieldLabel fl_pop = new FieldLabel(listPopulation, "Population");
+    FieldLabel fl_pop = new FieldLabel(lvAll, label);
     fl_pop.setLabelAlign(LabelAlign.TOP);
-    RatedFilterField filterPop = new RatedFilterField(listPopulation);
+    NamedFilterField<T> filterPop = new NamedFilterField<T>(lvAll);
 
     vc_left.add(fl_pop);
     vc_left.add(filterPop);
@@ -133,6 +198,16 @@ public class GroupEditor implements IsWidget
 
     left.setWidget(vc_left);
     return left;
+  }
+
+  private <T extends NamedDTO> ListView<T, String> createList(ListStore<T> s) {
+    ListView<T, String> list = new ListView<T, String>(s, namedProps.name());
+    list.setSize("-1", "20em");
+
+    new ListViewDragSource<T>(list);
+    new ListViewDropTarget<T>(list);
+
+    return list;
   }
 
   private SimpleContainer makePanel() {

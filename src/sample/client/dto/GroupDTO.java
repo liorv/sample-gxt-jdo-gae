@@ -4,43 +4,34 @@ import java.io.Serializable;
 import java.util.Set;
 
 @SuppressWarnings("serial")
-public class GroupDTO implements Serializable
+public class GroupDTO extends NamedDTO implements Serializable
 {
-  public GroupDTO() {}
-
-  public GroupDTO(String name, Set<String> members, Set<String> categories) {
-    this.name = name;
-    this.members = members;
-    this.categories = categories;
+  public GroupDTO() {
   }
-
-  private String name;
   
-  private Set<String> members;
+  public GroupDTO(String name, Set<RatedDTO> members, Set<CategoryDTO> categories) {
+    setName(name);
+    setMembers(members);
+    setCategories(categories);
+  }
   
-  private Set<String> categories;
+  private Set<RatedDTO> members;
+  
+  private Set<CategoryDTO> categories;
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Set<String> getMembers() {
+  public Set<RatedDTO> getMembers() {
     return members;
   }
 
-  public void setMembers(Set<String> members) {
+  public void setMembers(Set<RatedDTO> members) {
     this.members = members;
   }
 
-  public Set<String> getCategories() {
+  public Set<CategoryDTO> getCategories() {
     return categories;
   }
 
-  public void setCategories(Set<String> categories) {
+  public void setCategories(Set<CategoryDTO> categories) {
     this.categories = categories;
   }
 }

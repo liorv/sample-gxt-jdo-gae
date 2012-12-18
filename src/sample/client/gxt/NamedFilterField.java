@@ -1,6 +1,6 @@
 package sample.client.gxt;
 
-import sample.client.dto.RatedDTO;
+import sample.client.dto.NamedDTO;
 
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
@@ -10,14 +10,14 @@ import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.form.StoreFilterField;
 import com.sencha.gxt.widget.core.client.form.TextField;
 
-public class RatedFilterField implements IsWidget
+public class NamedFilterField<T extends NamedDTO> implements IsWidget
 {
-  public RatedFilterField(ListView<RatedDTO, String> listView) {
+  public NamedFilterField(ListView<T, String> listView) {
     super();
     this.store = listView.getStore();
   }
 
-  Store<RatedDTO> store;
+  Store<T> store;
 
   @Override
   public Widget asWidget() {
@@ -27,10 +27,10 @@ public class RatedFilterField implements IsWidget
     TextButton searchClearButton = new TextButton();
     searchClearButton.setIcon(Resources.INSTANCE.cancelSearchButton());
     
-    StoreFilterField<RatedDTO> filter = new StoreFilterField<RatedDTO>() {
+    StoreFilterField<T> filter = new StoreFilterField<T>() {
 
       @Override
-      protected boolean doSelect(Store<RatedDTO> store, RatedDTO parent, RatedDTO item, String filter) {
+      protected boolean doSelect(Store<T> store, T parent, T item, String filter) {
         String name = item.getName();
         
         name = name.toLowerCase();

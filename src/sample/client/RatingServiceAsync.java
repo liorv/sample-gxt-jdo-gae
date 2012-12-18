@@ -2,6 +2,9 @@ package sample.client;
 
 import java.util.List;
 
+import sample.client.dto.CategoryDTO;
+import sample.client.dto.GroupDTO;
+import sample.client.dto.RatedDTO;
 import sample.client.dto.StatsDTO;
 
 
@@ -22,4 +25,10 @@ public interface RatingServiceAsync {
   void getGroupStats(String group, AsyncCallback<List<StatsDTO>> callback);
 
   void loadData(AsyncCallback<List<StatsDTO>> callback);
+
+  void getAllCategories(AsyncCallback<List<CategoryDTO>> callback);
+
+  void getAllRated(AsyncCallback<List<RatedDTO>> callback);
+
+  void getGroup(String groupName, AsyncCallback<GroupDTO> callback);
 }
