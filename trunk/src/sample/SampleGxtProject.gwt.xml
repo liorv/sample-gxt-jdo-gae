@@ -23,6 +23,7 @@
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
   <source path='client.gxt'/>
+  <source path='client.dto'/>
   <source path='shared'/>
 
 </module>

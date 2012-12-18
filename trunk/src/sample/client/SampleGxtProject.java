@@ -48,7 +48,7 @@ public class SampleGxtProject implements EntryPoint
     
     vc.add(new CategoryEditor());
     
-    vc.add(new GroupEditor(null, null, null));
+    vc.add(new GroupEditor());
    
     HorizontalLayoutContainer panelTestButtons = new HorizontalLayoutContainer();
     panelTestButtons.add(loadButton);
@@ -63,7 +63,7 @@ public class SampleGxtProject implements EntryPoint
     vp.add(vc);
     RootPanel.get().add(vp);
 
-    class AsyncCB implements AsyncCallback<List<StatsDTO>>
+    class GetStatsAsyncCB implements AsyncCallback<List<StatsDTO>>
     {
       @Override
       public void onFailure(Throwable caught) {}
@@ -78,7 +78,7 @@ public class SampleGxtProject implements EntryPoint
     {
       @Override
       public void onClick(ClickEvent event) {
-        ratingService.getCategoryRatedStats("Looks", new AsyncCB());
+        ratingService.getCategoryRatedStats("Looks", new GetStatsAsyncCB());
       }
     }
 
@@ -86,7 +86,7 @@ public class SampleGxtProject implements EntryPoint
     {
       @Override
       public void onClick(ClickEvent event) {
-        ratingService.getCategoryGroupStats("Looks", new AsyncCB());
+        ratingService.getCategoryGroupStats("Looks", new GetStatsAsyncCB());
       }
     }
 
@@ -94,7 +94,7 @@ public class SampleGxtProject implements EntryPoint
     {
       @Override
       public void onClick(ClickEvent event) {
-        ratingService.getRatedStats("Nadine", new AsyncCB());
+        ratingService.getRatedStats("Nadine", new GetStatsAsyncCB());
       }
     }
 
@@ -102,7 +102,7 @@ public class SampleGxtProject implements EntryPoint
     {
       @Override
       public void onClick(ClickEvent event) {
-        ratingService.getGroupStats("Girls", new AsyncCB());
+        ratingService.getGroupStats("Girls", new GetStatsAsyncCB());
       }
     }
 
@@ -110,7 +110,7 @@ public class SampleGxtProject implements EntryPoint
     {
       @Override
       public void onClick(ClickEvent event) {
-        ratingService.loadData(new AsyncCB());
+        ratingService.loadData(new GetStatsAsyncCB());
       }
     }
 
