@@ -16,12 +16,12 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 import javax.jdo.annotations.PersistenceAware;
 
-import jdo.key.KFProvider;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import com.google.appengine.api.datastore.KeyFactory;
 
 @PersistenceAware
 @Component
@@ -33,6 +33,18 @@ public final class JDOSession
   @Qualifier("safePersistMode")
   public void setSafePersistMode(Boolean safePersistMode) {
     JDOSession.safePersistMode = safePersistMode.booleanValue();
+  }
+
+  private static boolean gaeMode;
+
+  @Autowired
+  @Qualifier("gaeMode")
+  public void setGaeMode(Boolean gaeMode) {
+    JDOSession.gaeMode = gaeMode.booleanValue();
+  }
+
+  public static boolean isGaeMode() {
+    return gaeMode;
   }
 
   private static Logger log = Logger.getLogger(JDOSession.class);
@@ -79,7 +91,9 @@ public final class JDOSession
   public void close() {
     try {
       tx = pm.currentTransaction();
-      if (i_transactional && tx.isActive()) tx.commit();
+      if (i_transactional && tx.isActive()) {
+        tx.commit();
+      }
     }
     catch (javax.jdo.JDODataStoreException dse) {
       System.err.println("Exception Caught JDODataStoreException: ["
@@ -139,7 +153,8 @@ public final class JDOSession
   }
 
   public <T> T find(Class<T> clz, String name) {
-    return pm.getObjectById(clz, KFProvider.key(clz, name));
+    return pm.getObjectById(clz,
+        KeyFactory.createKey(clz.getSimpleName(), name));
   }
 
   private static <T> String fieldValue(Class<T> clz, String k, String v) {

@@ -31,4 +31,7 @@ public interface RatingServiceAsync {
   void getAllRated(AsyncCallback<List<RatedDTO>> callback);
 
   void getGroup(String groupName, AsyncCallback<GroupDTO> callback);
+
+  void rate(String category, String rated, float score,
+      AsyncCallback<Void> callback);
 }

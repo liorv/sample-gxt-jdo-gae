@@ -1,5 +1,8 @@
 package jdo;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,9 +48,9 @@ public class TestJDO
   }
 
   private static void addToGroup(String group, String rated) {
-    JDOSession session = JDOSession.open();    
+    JDOSession session = JDOSession.open();
     Rated r = session.find(Rated.class, rated);
-    Grouping g = session.find(Grouping.class, group);    
+    Grouping g = session.find(Grouping.class, group);
     g.addMember(r);
     session.close();
   }
@@ -81,6 +84,10 @@ public class TestJDO
     for (String name : peopleNames) {
       people.add(new Rated(name));
     }
+
+    Date d = Calendar.getInstance().getTime();
+    SimpleDateFormat format = new SimpleDateFormat();
+    people.add(new Rated(format.format(d)));
     return people;
   }
 
@@ -116,8 +123,16 @@ public class TestJDO
       JDOUtils.clear(Grouping.class);
       JDOUtils.clear(Category.class);
       JDOUtils.clear(Reward.class);
+      JDOUtils.clear(StatRelation.class);
 
       printState("Clear - DONE");
+      try {
+        Thread.sleep(300);
+      }
+      catch (InterruptedException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
 
       Set<Rated> people = createPeople();
       Set<Grouping> groups = createGroups();

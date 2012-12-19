@@ -31,4 +31,6 @@ public interface RatingService extends RemoteService {
 	List<RatedDTO> getAllRated();
 	
 	GroupDTO getGroup(String groupName);
+	
+	void rate(String category, String rated, float score);
 }

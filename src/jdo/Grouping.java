@@ -18,7 +18,8 @@ public class Grouping extends BaseDataObject
   protected Set<Rated> members;
 
   @Persistent
-  @Element(dependent = "true")
+  @Unowned
+  @Element(dependent = "false")
   protected HashSet<StatRelation> stats;
 
   @Persistent

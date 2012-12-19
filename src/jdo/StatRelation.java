@@ -1,27 +1,21 @@
 package jdo;
 
-import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
 
-import com.google.appengine.api.datastore.Key;
 import com.google.appengine.datanucleus.annotations.Unowned;
 
-@PersistenceCapable(identityType = IdentityType.DATASTORE)
-public class StatRelation
+@PersistenceCapable(identityType=IdentityType.APPLICATION)
+public class StatRelation extends DataObject
 {
   protected StatRelation(Category c, String name, Class<?> clz)
   {
+    super(StatRelation.class, "stat("+c.getName()+","+name+")");
     this.category = c;
     this.name = name;
     reset();
   }
-
-  @PrimaryKey
-  @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-  private Key key;
 
   @Persistent
   private float min;
@@ -47,14 +41,6 @@ public class StatRelation
     if (score > max) max = score;
     mean = (mean * count + score) / (count + 1);
     count++;
-  }
-
-  public Key getKey() {
-    return key;
-  }
-
-  public void setKey(Key key) {
-    this.key = key;
   }
 
   public float getMin() {

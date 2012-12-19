@@ -17,7 +17,11 @@ public class PersistManyAction<T> extends JDOAction
 
   @Override
   public boolean isTransactional() {
-    return true;
+    /*
+     * for GAE, a collection is essentially N entity groups, so can't do in 
+     * single JDO transaction,...
+     */
+    return !JDOSession.isGaeMode();
   }
 
 }
