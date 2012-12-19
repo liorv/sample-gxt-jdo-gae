@@ -6,19 +6,20 @@ import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-import jdo.key.KFProvider;
 
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 
 abstract public class DataObject
 { 
-  public String getPk() {
+  public Key getPk() {
     return pk;
   }
 
-  public void setPk(String pk) {
+  public void setPk(Key pk) {
     this.pk = pk;
   }
 
@@ -32,14 +33,14 @@ abstract public class DataObject
 
   @PrimaryKey
   @Persistent
-  protected String pk;
+  protected Key pk;
 
   @Persistent
   protected String name;
 
   protected <T> DataObject(Class<T> clz, String id) {
     this.name = id;
-    pk = KFProvider.key(clz, id);
+    pk = KeyFactory.createKey(clz.getSimpleName(), id);
   }
 
   @Override

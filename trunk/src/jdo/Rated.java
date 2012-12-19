@@ -8,6 +8,8 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import com.google.appengine.datanucleus.annotations.Unowned;
+
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class Rated extends BaseDataObject
 {
@@ -64,6 +66,7 @@ public class Rated extends BaseDataObject
   protected Set<RewardCase> rewardCases;
 
   @Persistent
-  @Element(dependent = "true")
+  @Unowned
+  @Element(dependent = "false")
   protected Set<StatRelation> stats;
 }

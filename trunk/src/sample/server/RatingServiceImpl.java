@@ -131,4 +131,13 @@ public class RatingServiceImpl implements RatingService
     session.close();
     return (new GroupDTOMapper()).toDTO(g);
   }
+
+  @Override
+  public void rate(String category, String rated, float score) {
+    JDOSession session = JDOSession.open();
+    Category c = session.find(Category.class, category);
+    Rated r = session.find(Rated.class, rated);
+    c.rate(r, score);
+    session.close();
+  }
 }

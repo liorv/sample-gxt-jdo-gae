@@ -38,8 +38,10 @@ public class SampleGxtProject implements EntryPoint
     final Button groupButton = new Button("group");
     final Button categoryRatedButton = new Button("c-rated");
     final Button categoryGroupButton = new Button("c-group");
+    final Button rateButton = new Button("RATE");
 
     final RatedCategoryGrid grid = new RatedCategoryGrid();
+    final GroupEditor groupEditor = new GroupEditor();
 
     VerticalLayoutContainer vc = new VerticalLayoutContainer();
     //BoxLayoutData layoutData = new BoxLayoutData(new Margins(5, 0, 0, 5));
@@ -48,7 +50,7 @@ public class SampleGxtProject implements EntryPoint
     
     vc.add(new CategoryEditor());
     
-    vc.add(new GroupEditor());
+    vc.add(groupEditor);
    
     HorizontalLayoutContainer panelTestButtons = new HorizontalLayoutContainer();
     panelTestButtons.add(loadButton);
@@ -56,6 +58,7 @@ public class SampleGxtProject implements EntryPoint
     panelTestButtons.add(groupButton);
     panelTestButtons.add(categoryRatedButton);
     panelTestButtons.add(categoryGroupButton);
+    panelTestButtons.add(rateButton);
     
     vc.add(panelTestButtons);
     
@@ -69,7 +72,7 @@ public class SampleGxtProject implements EntryPoint
       public void onFailure(Throwable caught) {}
 
       @Override
-      public void onSuccess(List<StatsDTO> result) {
+      public void onSuccess(List<StatsDTO> result) {        
         grid.setStats(result);
       }
     }
@@ -111,6 +114,23 @@ public class SampleGxtProject implements EntryPoint
       @Override
       public void onClick(ClickEvent event) {
         ratingService.loadData(new GetStatsAsyncCB());
+        groupEditor.reload();
+      }
+    }
+    
+    class rateHandler implements ClickHandler
+    {
+      @Override
+      public void onClick(ClickEvent event) {
+        ratingService.rate("Looks", "Nadine", 10, new AsyncCallback<Void>() {
+          @Override
+          public void onFailure(Throwable caught) {
+          }
+
+          @Override
+          public void onSuccess(Void result) {
+          }
+        });
       }
     }
 
@@ -120,5 +140,6 @@ public class SampleGxtProject implements EntryPoint
     groupButton.addClickHandler(new requestGroupHandler());
     categoryRatedButton.addClickHandler(new requestCategoryRatedHandler());
     categoryGroupButton.addClickHandler(new requestCategoryGroupHandler());
+    rateButton.addClickHandler(new rateHandler());
   }
 }

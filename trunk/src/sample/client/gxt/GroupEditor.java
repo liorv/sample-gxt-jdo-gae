@@ -1,6 +1,5 @@
 package sample.client.gxt;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
@@ -78,40 +77,6 @@ public class GroupEditor implements IsWidget
 
   @Override
   public Widget asWidget() {
-    ratingService.getAllCategories(new AsyncCallback<List<CategoryDTO>>() {
-
-      @Override
-      public void onSuccess(List<CategoryDTO> result) {
-        allStoreCat.addAll(result);
-      }
-
-      @Override
-      public void onFailure(Throwable caught) {}
-    });
-
-    ratingService.getAllRated(new AsyncCallback<List<RatedDTO>>() {
-      @Override
-      public void onSuccess(List<RatedDTO> result) {
-        allStoreRated.addAll(result);
-      }
-
-      @Override
-      public void onFailure(Throwable caught) {}
-    });
-
-    if (group != null && group.getName().length() > 0) {
-      ratingService.getGroup(group.getName(), new AsyncCallback<GroupDTO>() {
-        @Override
-        public void onSuccess(GroupDTO result) {
-          groupStoreCat.addAll(result.getCategories());
-          groupStoreRated.addAll(result.getMembers());
-        }
-
-        @Override
-        public void onFailure(Throwable caught) {}
-      });
-    }
-
     FramedPanel panel = new FramedPanel();
     panel.setHeadingText("Edit group [" + group.getName() + "]");
 
@@ -212,5 +177,44 @@ public class GroupEditor implements IsWidget
 
   private SimpleContainer makePanel() {
     return new SimpleContainer();
+  }
+
+  public void reload() {    
+    ratingService.getAllCategories(new AsyncCallback<List<CategoryDTO>>() {
+      @Override
+      public void onSuccess(List<CategoryDTO> result) {
+        allStoreCat.clear();
+        allStoreCat.addAll(result);
+      }
+
+      @Override
+      public void onFailure(Throwable caught) {}
+    });
+
+    ratingService.getAllRated(new AsyncCallback<List<RatedDTO>>() {
+      @Override
+      public void onSuccess(List<RatedDTO> result) {
+        allStoreRated.clear();
+        allStoreRated.addAll(result);
+      }
+
+      @Override
+      public void onFailure(Throwable caught) {}
+    });
+
+    if (group != null && group.getName().length() > 0) {
+      ratingService.getGroup(group.getName(), new AsyncCallback<GroupDTO>() {
+        @Override
+        public void onSuccess(GroupDTO result) {
+          groupStoreCat.clear();
+          groupStoreRated.clear();          
+          groupStoreCat.addAll(result.getCategories());
+          groupStoreRated.addAll(result.getMembers());
+        }
+
+        @Override
+        public void onFailure(Throwable caught) {}
+      });
+    }
   }
 }
