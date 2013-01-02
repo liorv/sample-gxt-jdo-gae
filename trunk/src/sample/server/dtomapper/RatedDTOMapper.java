@@ -1,7 +1,7 @@
 package sample.server.dtomapper;
 
 import jdo.Rated;
-import sample.client.dto.RatedDTO;
+import sample.shared.result.RatedDTO;
 
 public class RatedDTOMapper extends DTOMapper<Rated, RatedDTO>
 {

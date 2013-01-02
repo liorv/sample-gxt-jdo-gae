@@ -3,6 +3,8 @@ package sample.server;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 import jdo.Category;
 import jdo.Grouping;
 import jdo.JDOSession;
@@ -10,23 +12,23 @@ import jdo.Rated;
 import jdo.StatRelation;
 import jdo.TestJDO;
 
-import org.springframework.stereotype.Service;
-
 import sample.client.RatingService;
-import sample.client.dto.CategoryDTO;
-import sample.client.dto.GroupDTO;
-import sample.client.dto.RatedDTO;
-import sample.client.dto.StatsDTO;
 import sample.server.dtomapper.CategoryDTOMapper;
 import sample.server.dtomapper.GroupDTOMapper;
 import sample.server.dtomapper.RatedDTOMapper;
 import sample.server.dtomapper.StatsDTOMapper;
+import sample.shared.Action;
+import sample.shared.Response;
+import sample.shared.result.CategoryDTO;
+import sample.shared.result.GroupDTO;
+import sample.shared.result.RatedDTO;
+import sample.shared.result.StatsDTO;
 
 /**
  * The server side implementation of the RPC service.
  */
-@Service("rating")
-public class RatingServiceImpl implements RatingService
+@SuppressWarnings("serial")
+public class RatingServiceImpl extends RemoteServiceServlet implements RatingService
 {
 
   /**
@@ -139,5 +141,14 @@ public class RatingServiceImpl implements RatingService
     Rated r = session.find(Rated.class, rated);
     c.rate(r, score);
     session.close();
+  }
+  
+// ---------------------------------
+  
+  @Override
+  public <R extends Response> R execute(Action<R> action) {
+    System.out.println("server:execute() ---> "+action.getClass().getSimpleName());
+    // TODO Auto-generated method stub    
+    return null;
   }
 }

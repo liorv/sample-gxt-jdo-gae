@@ -3,9 +3,9 @@ package sample.server.dtomapper;
 import java.util.HashSet;
 import java.util.Set;
 
-import sample.client.dto.CategoryDTO;
-import sample.client.dto.GroupDTO;
-import sample.client.dto.RatedDTO;
+import sample.shared.result.CategoryDTO;
+import sample.shared.result.GroupDTO;
+import sample.shared.result.RatedDTO;
 import jdo.Grouping;
 
 public class GroupDTOMapper extends DTOMapper<Grouping, GroupDTO>

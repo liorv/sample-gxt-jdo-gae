@@ -2,18 +2,20 @@ package sample.client;
 
 import java.util.List;
 
-import sample.client.dto.CategoryDTO;
-import sample.client.dto.GroupDTO;
-import sample.client.dto.RatedDTO;
-import sample.client.dto.StatsDTO;
-
+import sample.shared.Action;
+import sample.shared.Response;
+import sample.shared.result.CategoryDTO;
+import sample.shared.result.GroupDTO;
+import sample.shared.result.RatedDTO;
+import sample.shared.result.StatsDTO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
  * The async counterpart of <code>RatingService</code>.
  */
-public interface RatingServiceAsync {
+public interface RatingServiceAsync
+{
   void getCategoryRatedStats(String category,
       AsyncCallback<List<StatsDTO>> callback);
 
@@ -34,4 +36,7 @@ public interface RatingServiceAsync {
 
   void rate(String category, String rated, float score,
       AsyncCallback<Void> callback);
+  
+  // -------------------------------------------
+  <R extends Response> void execute(Action<R> action, AsyncCallback<R> callback);
 }

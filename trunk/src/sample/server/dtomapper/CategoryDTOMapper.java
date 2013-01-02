@@ -1,6 +1,6 @@
 package sample.server.dtomapper;
 
-import sample.client.dto.CategoryDTO;
+import sample.shared.result.CategoryDTO;
 import jdo.Category;
 
 public class CategoryDTOMapper extends DTOMapper<Category, CategoryDTO>
