@@ -1,7 +1,7 @@
 package sample.server.dtomapper;
 
 import jdo.StatRelation;
-import sample.client.dto.StatsDTO;
+import sample.shared.result.StatsDTO;
 
 public class StatsDTOMapper extends DTOMapper<StatRelation, StatsDTO>
 {

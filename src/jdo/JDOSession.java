@@ -17,31 +17,21 @@ import javax.jdo.Transaction;
 import javax.jdo.annotations.PersistenceAware;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 @PersistenceAware
-@Component
 public final class JDOSession
 {
+  @Inject
+  @Named("isSafePersistMode")
   private static boolean safePersistMode;
 
-  @Autowired
-  @Qualifier("safePersistMode")
-  public void setSafePersistMode(Boolean safePersistMode) {
-    JDOSession.safePersistMode = safePersistMode.booleanValue();
-  }
-
+  @Inject
+  @Named("isGAE")
   private static boolean gaeMode;
-
-  @Autowired
-  @Qualifier("gaeMode")
-  public void setGaeMode(Boolean gaeMode) {
-    JDOSession.gaeMode = gaeMode.booleanValue();
-  }
 
   public static boolean isGaeMode() {
     return gaeMode;
