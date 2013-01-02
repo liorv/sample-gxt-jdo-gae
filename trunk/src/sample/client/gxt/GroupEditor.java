@@ -1,18 +1,14 @@
 package sample.client.gxt;
 
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
-
-import sample.client.RatingService;
-import sample.client.RatingServiceAsync;
-import sample.client.dto.NamedDTO;
-import sample.client.dto.CategoryDTO;
-import sample.client.dto.GroupDTO;
-import sample.client.dto.RatedDTO;
+import sample.shared.result.NamedDTO;
+import sample.shared.result.CategoryDTO;
+import sample.shared.result.GroupDTO;
+import sample.shared.result.RatedDTO;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.editor.client.Editor.Path;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.ValueProvider;
@@ -49,7 +45,8 @@ public class GroupEditor implements IsWidget
 
     groupStoreCat = new ListStore<CategoryDTO>(namedProps.key());
 
-    group = new GroupDTO("", new HashSet<RatedDTO>(), new HashSet<CategoryDTO>());
+    group =
+        new GroupDTO("", new HashSet<RatedDTO>(), new HashSet<CategoryDTO>());
   }
 
   public interface NamedProps<T extends NamedDTO> extends PropertyAccess<T>
@@ -60,8 +57,8 @@ public class GroupEditor implements IsWidget
     ValueProvider<NamedDTO, String> name();
   }
 
-  private final RatingServiceAsync ratingService = GWT
-      .create(RatingService.class);
+  //private final RatingServiceAsync ratingService = GWT
+  //.create(RatingService.class);
 
   private NamedProps<?> namedProps;
 
@@ -179,42 +176,24 @@ public class GroupEditor implements IsWidget
     return new SimpleContainer();
   }
 
-  public void reload() {    
-    ratingService.getAllCategories(new AsyncCallback<List<CategoryDTO>>() {
-      @Override
-      public void onSuccess(List<CategoryDTO> result) {
-        allStoreCat.clear();
-        allStoreCat.addAll(result);
-      }
-
-      @Override
-      public void onFailure(Throwable caught) {}
-    });
-
-    ratingService.getAllRated(new AsyncCallback<List<RatedDTO>>() {
-      @Override
-      public void onSuccess(List<RatedDTO> result) {
-        allStoreRated.clear();
-        allStoreRated.addAll(result);
-      }
-
-      @Override
-      public void onFailure(Throwable caught) {}
-    });
-
-    if (group != null && group.getName().length() > 0) {
-      ratingService.getGroup(group.getName(), new AsyncCallback<GroupDTO>() {
-        @Override
-        public void onSuccess(GroupDTO result) {
-          groupStoreCat.clear();
-          groupStoreRated.clear();          
-          groupStoreCat.addAll(result.getCategories());
-          groupStoreRated.addAll(result.getMembers());
-        }
-
-        @Override
-        public void onFailure(Throwable caught) {}
-      });
-    }
+  public void clear() {
+    allStoreCat.clear();
+    allStoreRated.clear();
+    groupStoreCat.clear();
+    groupStoreRated.clear();
   }
+
+  public void setAllCategories(Collection<CategoryDTO> result) {
+    allStoreCat.addAll(result);
+  }
+
+  public void setAllRated(Collection<RatedDTO> result) {
+    allStoreRated.addAll(result);
+  }
+
+  public void setGroup(GroupDTO result) {
+    groupStoreCat.addAll(result.getCategories());
+    groupStoreRated.addAll(result.getMembers());
+  }
+  
 }

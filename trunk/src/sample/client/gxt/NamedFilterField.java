@@ -1,6 +1,6 @@
 package sample.client.gxt;
 
-import sample.client.dto.NamedDTO;
+import sample.shared.result.NamedDTO;
 
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;

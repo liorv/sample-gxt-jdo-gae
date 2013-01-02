@@ -65,7 +65,7 @@ public class Example_SimplifiedEmailGrid extends LVGrid<Email, EmailProperties>
     return null;
   }
 
-  private Collection<? extends Email> makeEmails() {
+  Collection<? extends Email> makeEmails() {
     LinkedList<Email> retval = new LinkedList<Email>();
     final String[] emailTemplate = { "name", "email", "phone", "state", "zip" };
     for (int i = 0; i < 5; i++) {
