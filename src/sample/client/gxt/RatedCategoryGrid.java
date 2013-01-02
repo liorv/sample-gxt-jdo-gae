@@ -1,11 +1,10 @@
 package sample.client.gxt;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import sample.client.dto.StatsDTO;
 import sample.client.gxt.StatInterfaces.StatRelationCategoryRatedProps;
+import sample.shared.result.StatsDTO;
 
 import com.google.gwt.core.client.GWT;
 import com.sencha.gxt.data.shared.ListStore;
@@ -49,11 +48,6 @@ public class RatedCategoryGrid extends LVGrid<StatsDTO, StatRelationCategoryRate
   protected ListLoader<ListLoadConfig, ListLoadResult<StatsDTO>> createLoader()
   {
     return null;
-  }
-
-  public void setStats(Collection<StatsDTO> stats) {
-    listStore.clear();
-    listStore.addAll(stats);
   }
 
   @Override

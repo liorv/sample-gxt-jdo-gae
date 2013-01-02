@@ -1,5 +1,7 @@
 package sample.client.gxt;
 
+import java.util.Collection;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
@@ -55,4 +57,17 @@ abstract public class LVGrid<POJO, POJO_PROPS extends PropertyAccess<POJO>> impl
   abstract protected ListStore<POJO> createListStore();
 
   abstract protected ListLoader<ListLoadConfig, ListLoadResult<POJO>> createLoader();
+
+  public void clear() {
+    listStore.clear();
+  }
+  
+  public void setData(Collection<POJO> rows) {
+    clear();
+    addData(rows);
+  }
+  
+  public void addData(Collection<POJO> rows) {
+    listStore.addAll(rows);
+  }
 }
