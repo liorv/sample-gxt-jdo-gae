@@ -3,10 +3,10 @@ package sample.shared.result;
 import java.io.Serializable;
 import java.util.Set;
 
-import sample.shared.Response;
+import net.customware.gwt.dispatch.shared.Result;
 
 @SuppressWarnings("serial")
-public class GroupDTO extends NamedDTO implements Serializable, Response
+public class GroupDTO extends NamedDTO implements Serializable, Result
 {
   public GroupDTO() {
   }

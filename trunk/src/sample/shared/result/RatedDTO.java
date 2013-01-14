@@ -2,10 +2,10 @@ package sample.shared.result;
 
 import java.io.Serializable;
 
-import sample.shared.Response;
+import net.customware.gwt.dispatch.shared.Result;
 
 @SuppressWarnings("serial")
-public class RatedDTO extends NamedDTO implements Serializable, Response
+public class RatedDTO extends NamedDTO implements Serializable, Result
 {
   public RatedDTO() {}
 

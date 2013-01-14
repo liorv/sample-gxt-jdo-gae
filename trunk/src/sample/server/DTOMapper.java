@@ -1,4 +1,4 @@
-package sample.server.dtomapper;
+package sample.server;
 
 import java.util.Collection;
 
