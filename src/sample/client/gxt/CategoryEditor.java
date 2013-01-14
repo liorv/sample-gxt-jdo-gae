@@ -37,7 +37,6 @@ public class CategoryEditor implements IsWidget
 
     p.add(new FieldLabel(iwidget.asWidget(), "Type"), new VerticalLayoutData());
 
-
     return panel;
   }
 }

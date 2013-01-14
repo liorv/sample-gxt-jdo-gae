@@ -1,9 +1,16 @@
-package sample.client.gxt;
+package sample.client.view;
 
 import java.util.List;
+import java.util.Vector;
 
 import sample.client.presenter.RootPresenter;
+import sample.client.gxt.CategoryEditor;
+import sample.client.gxt.GroupEditor;
+import sample.client.gxt.LVGrid;
+import sample.client.gxt.RatedCategoryGrid;
 import sample.client.gxt.StatInterfaces.StatRelationCategoryRatedProps;
+import sample.shared.result.CategoryDTO;
+import sample.shared.result.RatedDTO;
 import sample.shared.result.StatsDTO;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -15,10 +22,12 @@ import com.sencha.gxt.widget.core.client.container.Viewport;
 
 public class RootView extends Composite implements RootPresenter.Display
 {
-  final GroupEditor groupEditor = new GroupEditor();
-
   final LVGrid<StatsDTO, StatRelationCategoryRatedProps> grid =
       new RatedCategoryGrid();
+  
+  final CategoryEditor categoryEditor = new CategoryEditor();
+  
+  final GroupEditor groupEditor = new GroupEditor();
 
   final Button loadButton = new Button("load");
   final Button ratedButton = new Button("rated");
@@ -33,7 +42,7 @@ public class RootView extends Composite implements RootPresenter.Display
 
     vc.add(grid);
 
-    vc.add(new CategoryEditor());
+    vc.add(categoryEditor);
 
     vc.add(groupEditor);
 
@@ -86,5 +95,15 @@ public class RootView extends Composite implements RootPresenter.Display
   @Override
   public void setStats(List<StatsDTO> stats) {
     grid.setData(stats);
+  }
+
+  @Override
+  public void setAllRated(Vector<RatedDTO> allRated) {
+    groupEditor.setAllRated(allRated);
+  }
+
+  @Override
+  public void setAllCategories(Vector<CategoryDTO> allCategories) {
+    groupEditor.setAllCategories(allCategories);
   }
 }
