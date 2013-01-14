@@ -1,11 +1,13 @@
 package sample.server;
 
+import sample.server.handlers.CreateGroupActionHandler;
 import sample.server.handlers.GetStats_Category_Group_ActionHandler;
 import sample.server.handlers.GetStats_Category_Rated_ActionHandler;
 import sample.server.handlers.GetStats_Group_ActionHandler;
 import sample.server.handlers.GetStats_Rated_ActionHandler;
 import sample.server.handlers.LoadDataActionHandler;
 import sample.server.handlers.RateActionHandler;
+import sample.shared.action.CreateGroupAction;
 import sample.shared.action.GetStats_Category_Group_Action;
 import sample.shared.action.GetStats_Category_Rated_Action;
 import sample.shared.action.GetStats_Group_Action;
@@ -27,6 +29,7 @@ public class ActionsModule extends ActionHandlerModule
     bindHandler(GetStats_Category_Group_Action.class,
         GetStats_Category_Group_ActionHandler.class);
     bindHandler(RateAction.class, RateActionHandler.class);
+    bindHandler(CreateGroupAction.class, CreateGroupActionHandler.class);
   }
 
 }

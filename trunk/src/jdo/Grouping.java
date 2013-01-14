@@ -43,7 +43,7 @@ public class Grouping extends BaseDataObject
     this.categories = categories;
   }
 
-  protected Grouping(String id) {
+  public Grouping(String id) {
     super(Grouping.class, id);
     members = new HashSet<Rated>();
     stats = new HashSet<StatRelation>();
