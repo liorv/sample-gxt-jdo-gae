@@ -27,11 +27,11 @@ public final class JDOSession
 {
   @Inject
   @Named("isSafePersistMode")
-  private static boolean safePersistMode;
+  static boolean safePersistMode = false;
 
   @Inject
   @Named("isGAE")
-  private static boolean gaeMode;
+  static boolean gaeMode = false;
 
   public static boolean isGaeMode() {
     return gaeMode;
@@ -58,7 +58,7 @@ public final class JDOSession
   public static JDOSession open() {
     return open(false);
   }
-
+  
   public static JDOSession open(boolean transactional) {
     JDOSession retval = new JDOSession();
     retval.pm = retval.getPM();

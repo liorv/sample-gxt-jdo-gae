@@ -2,10 +2,10 @@ package sample.shared.result;
 
 import java.io.Serializable;
 
-import sample.shared.Response;
+import net.customware.gwt.dispatch.shared.Result;
 
 @SuppressWarnings("serial")
-public class StatsDTO implements Serializable, Response
+public class StatsDTO implements Serializable, Result
 {
   public StatsDTO() {}
 

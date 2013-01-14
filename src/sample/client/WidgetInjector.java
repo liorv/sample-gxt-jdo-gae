@@ -7,6 +7,4 @@ import com.google.gwt.inject.client.Ginjector;
 public interface WidgetInjector extends Ginjector
 {
   AppController getAppViewer();
-  
-  RatingServiceAsync getRatingService();
 }

@@ -1,12 +1,12 @@
 package jdo;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
+import com.google.inject.servlet.ServletModule;
 
-public class JDOModule extends AbstractModule
+public class JDOModule extends ServletModule
 {
   @Override
-  protected void configure() {
+  protected void configureServlets() {
     bindConstant().annotatedWith(Names.named("isGAE")).to(true);
     bindConstant().annotatedWith(Names.named("isSafePersistMode")).to(true);
   }

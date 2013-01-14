@@ -1,5 +1,6 @@
 package sample.server.dtomapper;
 
+import sample.server.DTOMapper;
 import sample.shared.result.CategoryDTO;
 import jdo.Category;
 

@@ -1,17 +1,13 @@
 package sample.client;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-import sample.client.events.LoadEvent;
-import sample.client.events.LoadEventHandler;
+import sample.client.events.DataLoadedEvent;
+import sample.client.events.DataLoadedEventHandler;
 import sample.client.gxt.RootView;
 import sample.client.presenter.Presenter;
 import sample.client.presenter.RootPresenter;
-import sample.shared.action.LoadDataAction;
-import sample.shared.result.StatsDTO;
 
 public class AppController implements Presenter
 {
@@ -19,11 +15,7 @@ public class AppController implements Presenter
     RESET_VIEW;
   }
 
-  private final WidgetInjector injector = GWT.create(WidgetInjector.class);
-
   private final HandlerManager eventBus;
-
-  private RatingServiceAsync ratingSrv;
 
   private HasWidgets container;
 
@@ -36,22 +28,15 @@ public class AppController implements Presenter
 
   public AppController() {
     this.eventBus = new HandlerManager(null);
-    ratingSrv = injector.getRatingService();
     bind();
   }
 
   private void bind() {
     //Register all the handlers
-    eventBus.addHandler(LoadEvent.TYPE, new LoadEventHandler() {
+    eventBus.addHandler(DataLoadedEvent.TYPE, new DataLoadedEventHandler() {
       @Override
-      public void onLoad(LoadEvent loadEvent) {
-        ratingSrv.<StatsDTO> execute(new LoadDataAction(), new AsyncCallback<StatsDTO>() {
-          @Override
-          public void onFailure(Throwable caught) {}
-
-          @Override
-          public void onSuccess(StatsDTO result) {}
-        });
+      public void onLoad(DataLoadedEvent loadEvent) {
+        
       }
     });
   }

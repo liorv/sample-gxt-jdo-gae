@@ -3,6 +3,7 @@ package sample.server.dtomapper;
 import java.util.HashSet;
 import java.util.Set;
 
+import sample.server.DTOMapper;
 import sample.shared.result.CategoryDTO;
 import sample.shared.result.GroupDTO;
 import sample.shared.result.RatedDTO;
