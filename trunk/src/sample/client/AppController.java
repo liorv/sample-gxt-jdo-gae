@@ -3,11 +3,9 @@ package sample.client;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
 
-import sample.client.events.DataLoadedEvent;
-import sample.client.events.DataLoadedEventHandler;
-import sample.client.gxt.RootView;
 import sample.client.presenter.Presenter;
 import sample.client.presenter.RootPresenter;
+import sample.client.view.RootView;
 
 public class AppController implements Presenter
 {
@@ -27,18 +25,7 @@ public class AppController implements Presenter
   }
 
   public AppController() {
-    this.eventBus = new HandlerManager(null);
-    bind();
-  }
-
-  private void bind() {
-    //Register all the handlers
-    eventBus.addHandler(DataLoadedEvent.TYPE, new DataLoadedEventHandler() {
-      @Override
-      public void onLoad(DataLoadedEvent loadEvent) {
-        
-      }
-    });
+    eventBus = new HandlerManager(null);
   }
 
   private void managePresenter(ActionType actionType) {
