@@ -1,5 +1,6 @@
 package sample.server;
 
+import sample.server.handlers.CreateGroupActionHandler;
 import sample.server.handlers.GetStats_Category_Group_ActionHandler;
 import sample.server.handlers.GetStats_Category_Rated_ActionHandler;
 import sample.server.handlers.GetStats_Group_ActionHandler;
@@ -34,6 +35,7 @@ public class SimpleDispatchServlet extends RemoteServiceServlet implements Stand
     registry.addHandler(new GetStats_Category_Group_ActionHandler());
     
     registry.addHandler(new RateActionHandler());
+    registry.addHandler(new CreateGroupActionHandler());
     
     dispatch = new SimpleDispatch(registry);
   }
