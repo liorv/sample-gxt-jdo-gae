@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Vector;
 
 import sample.client.presenter.RootPresenter;
-import sample.client.gxt.CategoryEditor;
-import sample.client.gxt.GroupEditor;
-import sample.client.gxt.LVGrid;
-import sample.client.gxt.RatedCategoryGrid;
-import sample.client.gxt.StatInterfaces.StatRelationCategoryRatedProps;
+import sample.client.view.gxt.CategoryEditor;
+import sample.client.view.gxt.GroupEditor;
+import sample.client.view.gxt.LVGrid;
+import sample.client.view.gxt.RatedCategoryGrid;
+import sample.client.view.gxt.StatInterfaces.StatRelationCategoryRatedProps;
 import sample.shared.result.CategoryDTO;
 import sample.shared.result.RatedDTO;
 import sample.shared.result.StatsDTO;
