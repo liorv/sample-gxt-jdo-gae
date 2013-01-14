@@ -5,6 +5,7 @@ import sample.server.handlers.GetStats_Category_Rated_ActionHandler;
 import sample.server.handlers.GetStats_Group_ActionHandler;
 import sample.server.handlers.GetStats_Rated_ActionHandler;
 import sample.server.handlers.LoadDataActionHandler;
+import sample.server.handlers.RateActionHandler;
 import net.customware.gwt.dispatch.client.standard.StandardDispatchService;
 import net.customware.gwt.dispatch.server.DefaultActionHandlerRegistry;
 import net.customware.gwt.dispatch.server.Dispatch;
@@ -31,6 +32,8 @@ public class SimpleDispatchServlet extends RemoteServiceServlet implements Stand
     registry.addHandler(new GetStats_Group_ActionHandler());
     registry.addHandler(new GetStats_Category_Rated_ActionHandler());
     registry.addHandler(new GetStats_Category_Group_ActionHandler());
+    
+    registry.addHandler(new RateActionHandler());
     
     dispatch = new SimpleDispatch(registry);
   }

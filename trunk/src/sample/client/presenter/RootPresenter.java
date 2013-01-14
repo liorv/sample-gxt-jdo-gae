@@ -12,9 +12,11 @@ import sample.shared.action.GetStats_Category_Rated_Action;
 import sample.shared.action.GetStats_Group_Action;
 import sample.shared.action.GetStats_Rated_Action;
 import sample.shared.action.LoadDataAction;
+import sample.shared.action.RateAction;
 import sample.shared.result.CategoryDTO;
 import sample.shared.result.ListStatsResult;
 import sample.shared.result.LoadDataResult;
+import sample.shared.result.NullResult;
 import sample.shared.result.RatedDTO;
 import sample.shared.result.StatsDTO;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -115,7 +117,15 @@ public class RootPresenter implements Presenter
 
     display.getRateButton().addClickHandler(new ClickHandler() {
       @Override
-      public void onClick(ClickEvent event) {}
+      public void onClick(ClickEvent event) {
+        dispatch.execute(new RateAction("Looks", "Nadine", 10), new AsyncCallback<NullResult>() {
+          @Override
+          public void onFailure(Throwable caught) {}
+
+          @Override
+          public void onSuccess(NullResult result) {}
+        });
+      }
     });
 
   }
