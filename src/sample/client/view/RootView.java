@@ -16,6 +16,8 @@ import sample.shared.result.StatsDTO;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.sencha.gxt.widget.core.client.PlainTabPanel;
+import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.Viewport;
@@ -40,11 +42,18 @@ public class RootView extends Composite implements RootPresenter.Display
     VerticalLayoutContainer vc = new VerticalLayoutContainer();
     //BoxLayoutData layoutData = new BoxLayoutData(new Margins(5, 0, 0, 5));
 
+    PlainTabPanel tabPanel = new PlainTabPanel();
+    tabPanel.setPixelSize(-1, 400);
+    
+    TabItemConfig categoryTab = new TabItemConfig("Category Editor");
+    TabItemConfig groupTab = new TabItemConfig("Group Editor");
+
+    tabPanel.add(categoryEditor, categoryTab);
+    tabPanel.add(groupEditor, groupTab);
+    
     vc.add(grid);
 
-    vc.add(categoryEditor);
-
-    vc.add(groupEditor);
+    vc.add(tabPanel);
 
     HorizontalLayoutContainer panelTestButtons =
         new HorizontalLayoutContainer();
